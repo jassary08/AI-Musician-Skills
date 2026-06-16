@@ -1,0 +1,168 @@
+{
+  "style": "rock",
+  "preferred_tags": [
+    "common",
+    "power_chord",
+    "barre",
+    "movable"
+  ],
+  "label_zh": "摇滚",
+  "harmony": {
+    "core_principles": [
+      "摇滚和声优先力量、方向和 riff 兼容性，不优先堆叠扩展音。",
+      "根音、五度、八度和三和弦骨架比复杂色彩更重要。",
+      "bVII、bVI、iv、sus4、dominant7 可用于制造粗粝感或复古感。",
+      "失真音色下，过密和弦会糊，扩展音要拆成高声部或单独装饰。"
+    ],
+    "chord_vocabulary": {
+      "default": [
+        "power_chord",
+        "major",
+        "minor",
+        "sus4"
+      ],
+      "color": [
+        "bVII",
+        "bVI",
+        "dominant7",
+        "add9"
+      ],
+      "cadence_tension": [
+        "V",
+        "bVII-I",
+        "IV-I",
+        "chromatic_power_chord"
+      ],
+      "avoid_by_default": [
+        "major7_as_main_sound",
+        "minor9_dense_voicing",
+        "full_extended_stack"
+      ]
+    },
+    "common_moves": [
+      "I-bVII-IV-I 适合 anthem / classic rock 语感。",
+      "i-bVI-bVII-i 适合 minor rock 和更暗的副歌。",
+      "I-IV-V 可以用 power chord 简化，让节奏和力度主导。",
+      "sus4 到 major 的释放很适合作为段落推进。",
+      "半音上行 power chord 可用于 pre-chorus 或 bridge 的张力积累。"
+    ],
+    "section_recipes": {
+      "intro": [
+        "用 riff 或 power chord 建立核心动机。",
+        "和弦数量不宜多，重在辨识度。"
+      ],
+      "verse": [
+        "可用低密度 power chord 或开放三和弦，保留人声空间。"
+      ],
+      "pre_chorus": [
+        "通过上行根音、sus、半音移动增加紧张度。"
+      ],
+      "chorus": [
+        "使用最直接的根音运动和开阔的 power/major/minor 骨架。"
+      ],
+      "bridge": [
+        "可切到相对小调、bVI/bVII 或 chromatic passing power chords。"
+      ]
+    },
+    "reharmonization_moves": [
+      "把复杂扩展和弦简化成 power chord 或三和弦骨架。",
+      "需要更硬时去掉三音，只保留根音和五度。",
+      "需要更流行时保留 add9 或 sus2 的开放高音。",
+      "主歌可少用完整和弦，副歌再打开到完整三和弦。"
+    ],
+    "arrangement_hints": [
+      "摇滚编配优先考虑根音运动、力度和可识别 riff，再决定是否加色彩音。",
+      "失真较重时优先 power chord 或简化三和弦，避免 maj7/m9 这类密集声音。",
+      "bVII、bVI、sus4 是常用的摇滚色彩。"
+    ],
+    "llm_usage": {
+      "prefer": [
+        "power chord",
+        "root movement",
+        "bVII",
+        "sus4",
+        "direct triads"
+      ],
+      "use_with_care": [
+        "add9",
+        "dominant7",
+        "borrowed chords"
+      ],
+      "do_not": [
+        "不要把摇滚段落默认 jazz 化",
+        "不要在失真六弦全扫里堆密集扩展音"
+      ]
+    }
+  },
+  "guitar_arrangement": {
+    "core_goal": "和声保持直接有力，用 power chord、根音五度和少量 sus/dominant7 建立吉他质感。",
+    "chord_language": {
+      "prefer": [
+        "power",
+        "major",
+        "minor",
+        "sus",
+        "dominant7"
+      ],
+      "use_with_care": [
+        "slash",
+        "add9",
+        "minor7"
+      ],
+      "avoid_by_default": [
+        "major7",
+        "minor9",
+        "dense_extended_chords"
+      ]
+    },
+    "voicing_strategy": [
+      "优先 power chord、根音加五度、八度加厚。",
+      "木吉他或弹唱版可以保留开放三和弦，但避免过密扩展音。",
+      "厚重音色中和弦可简化成低音根音、五度、八度，避免扩展音糊在一起。",
+      "sus4/sus2 可作为短促装饰或段落过渡。"
+    ],
+    "section_usage": {
+      "verse": [
+        "低密度 power chord"
+      ],
+      "pre_chorus": [
+        "逐步打开闷音",
+        "增加切分或上行低音"
+      ],
+      "chorus": [
+        "完整 power chord",
+        "双轨叠加"
+      ],
+      "bridge": []
+    },
+    "llm_prompt_hint": "摇滚吉他不要优先堆复杂和弦；先确定 power chord、开放三和弦或根音五度骨架，再考虑少量 sus 或 dominant7 色彩。",
+    "progression_templates": [
+      "I-bVII-IV-I",
+      "i-bVI-bVII-i",
+      "I-IV-V",
+      "vi-IV-I-V"
+    ],
+    "voicing_families": [
+      "power_chord",
+      "movable_root_fifth",
+      "open_rock_shapes",
+      "octave_doubling"
+    ],
+    "capo_strategy": [
+      "木吉他弹唱可用 capo 转开放和弦。",
+      "电吉他编配优先考虑原调根音位置和低把位 power chord。"
+    ],
+    "voice_leading_focus": [
+      "根音运动",
+      "低把位稳定",
+      "避免密集高音冲突"
+    ]
+  },
+  "transition_preferences": {
+    "prefer_common_fingers": true,
+    "prefer_open_string_continuity": false,
+    "prefer_top_note_continuity": false,
+    "prefer_bass_step_motion": true,
+    "allow_position_movement": "medium"
+  }
+}

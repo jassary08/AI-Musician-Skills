@@ -1,0 +1,12 @@
+{
+  "version": "0.1.0",
+  "description": "Sidecar index manifest for AI-ChordCraft guitar voicing layers.",
+  "source": "../voicing_layers.json",
+  "files": {
+    "musical_taxonomy.json": "Chord family, quality, and harmony-tier indexes.",
+    "guitar_playability.json": "Difficulty, position, shape, and playability-tier indexes.",
+    "release_review_pools.json": "Release layer and review-priority indexes for curation.",
+    "style_fit.json": "Style fit indexes for pop, rock, rnb, blues, and funk.",
+    "voice_leading.json": "Bass-note and top-note indexes for transition planning."
+  }
+}

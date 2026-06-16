@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "supported_time_signatures": ["4/4"],
+  "supported_styles": ["pop", "rock", "rnb", "blues", "funk"],
+  "supported_levels": ["beginner", "intermediate"],
+  "supported_sections": ["intro", "verse", "pre_chorus", "chorus", "bridge", "interlude", "outro", "12bar"],
+  "required_output_fields": ["capo", "play_as_key", "display_chords", "voicings", "style_guidance", "practice_notes", "exports", "validation"],
+  "minimum_practice_notes": 2,
+  "fail_on": {
+    "unsupported_meter": true,
+    "empty_chords": true,
+    "missing_all_voicings": true
+  },
+  "warn_on": {
+    "unsupported_style": true,
+    "unsupported_section": true,
+    "unsupported_level": true,
+    "simplified_chords": true,
+    "barre_for_beginner": true,
+    "missing_chordpro": true
+  }
+}

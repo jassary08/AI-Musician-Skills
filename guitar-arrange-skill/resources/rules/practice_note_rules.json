@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "templates": {
+    "capo_transform": "Capo {capo} 后可以把 {original} 转成 {display}，提高弹唱手感。",
+    "no_capo": "不使用 Capo 时保持原调和弦，适合已经熟悉这些手型的演奏者。",
+    "beginner_tempo": "先用 {ratio}% 速度循环和弦，再逐渐提高到原速。",
+    "intermediate_voicing": "中级版本可以关注高音保持和相邻和弦的共同手指，减少换把痕迹。",
+    "goal": "编配目标：{goal}"
+  },
+  "section_labels": {
+    "intro": "前奏",
+    "verse": "主歌",
+    "pre_chorus": "预副歌",
+    "chorus": "副歌",
+    "bridge": "桥段",
+    "interlude": "间奏",
+    "outro": "尾奏"
+  }
+}

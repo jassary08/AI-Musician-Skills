@@ -1,0 +1,172 @@
+{
+  "style": "blues",
+  "preferred_tags": [
+    "common",
+    "dominant",
+    "movable",
+    "barre"
+  ],
+  "label_zh": "布鲁斯",
+  "harmony": {
+    "core_principles": [
+      "Blues 的核心不是复杂替代，而是 I-IV-V、dominant 色彩、turnaround 和 call-response。",
+      "I、IV、V 都可以是 dominant7/9，这是风格语言，不一定按传统功能解释。",
+      "minor pentatonic 与 dominant 和弦并置会产生蓝调张力。",
+      "和弦编配要给 lick、滑音、双音和 turnaround 留空间。"
+    ],
+    "chord_vocabulary": {
+      "default": [
+        "dominant7",
+        "dominant9",
+        "minor7",
+        "sixth"
+      ],
+      "color": [
+        "7sharp9",
+        "13",
+        "dim_passing",
+        "quick_change_IV"
+      ],
+      "cadence_tension": [
+        "V7-IV7-I7",
+        "turnaround",
+        "chromatic_approach"
+      ],
+      "avoid_by_default": [
+        "plain_major_only",
+        "overly_smooth_pop_maj7",
+        "dense_jazz_stack_without_blues_phrase"
+      ]
+    },
+    "common_moves": [
+      "12-bar: I7-I7-I7-I7 / IV7-IV7-I7-I7 / V7-IV7-I7-V7 是基础骨架。",
+      "Quick change 在第 2 小节到 IV7，可增强传统 blues 味道。",
+      "Turnaround 可用 I-VI7-II7-V7 或 chromatic walkdown。",
+      "I7 到 IV7 可以用六度双音或低音 walk-up 连接。",
+      "V7 到 IV7 到 I7 的回落要明确，避免过度平滑。"
+    ],
+    "section_recipes": {
+      "intro": [
+        "用 turnaround 或 I7/IV7 双音建立风格。"
+      ],
+      "verse": [
+        "以 12-bar 或 I-IV-V 为骨架，保留 dominant7/9。"
+      ],
+      "chorus": [
+        "加重 chord stabs 或更明确的 V-IV-I 回落。"
+      ],
+      "bridge": [
+        "可用 quick change、minor blues 或 chromatic turnaround 形成对比。"
+      ],
+      "outro": [
+        "使用 classic turnaround 或 I7 sharp9 终止。"
+      ]
+    },
+    "reharmonization_moves": [
+      "普通 I-IV-V 可统一改成 I7-IV7-V7。",
+      "段落结尾加入 V7 或 turnaround，而不是直接停在 I。",
+      "需要更 jazzy 时加入 9/13，但仍保持 blues phrase 逻辑。",
+      "passing diminished 可连接 I 到 ii 或 IV 到 I。"
+    ],
+    "arrangement_hints": [
+      "Blues 编配优先 dominant7/9、I-IV-V 和 turnaround。",
+      "不要把 blues 过度流行化成纯大三和弦。",
+      "小型双音、六度、9 和弦比密集大横按更有风格。",
+      "结尾和过门要考虑 V7 或 turnaround。"
+    ],
+    "llm_usage": {
+      "prefer": [
+        "I7-IV7-V7",
+        "dominant9",
+        "turnaround",
+        "quick change",
+        "sliding sixths"
+      ],
+      "use_with_care": [
+        "dim passing",
+        "13th",
+        "7sharp9"
+      ],
+      "do_not": [
+        "不要默认使用纯 major triads",
+        "不要忽略 turnaround"
+      ]
+    }
+  },
+  "guitar_arrangement": {
+    "core_goal": "围绕 I-IV-V、dominant7、shuffle/turnaround 和蓝调句法组织吉他伴奏。",
+    "chord_language": {
+      "prefer": [
+        "dominant7",
+        "minor7",
+        "sixth",
+        "ninth",
+        "dominant9"
+      ],
+      "use_with_care": [
+        "diminished",
+        "altered",
+        "sharp9"
+      ],
+      "avoid_by_default": [
+        "plain_major_only",
+        "overly_smooth_pop_voicings"
+      ]
+    },
+    "voicing_strategy": [
+      "I、IV、V 常使用 dominant7 或 dominant9，而不是普通大三和弦。",
+      "用小型双音、六度滑音、bass walk-up/walk-down 增加 blues 语感。",
+      "turnaround 位置可以加入 V7、dim passing chord 或 chromatic approach。",
+      "solo guitar 编配可把 bassline、chord stabs 和填充 lick 合并。"
+    ],
+    "section_usage": {
+      "verse": [
+        "12-bar blues",
+        "shuffle",
+        "dominant7"
+      ],
+      "chorus": [
+        "更强 chord stabs",
+        "call-and-response fills"
+      ],
+      "bridge": [
+        "turnaround",
+        "quick change",
+        "V-IV-I"
+      ],
+      "interlude": [
+        "sliding sixths",
+        "single-note fill"
+      ]
+    },
+    "llm_prompt_hint": "布鲁斯编配优先判断是否是 12-bar/I-IV-V；dominant7/9、shuffle、turnaround 和填充 lick 比复杂和声更重要。",
+    "progression_templates": [
+      "12_bar_blues",
+      "quick_change_12_bar",
+      "minor_blues",
+      "I7-VI7-II7-V7_turnaround"
+    ],
+    "voicing_families": [
+      "dominant7_open",
+      "dominant9_partial",
+      "sixth_double_stops",
+      "movable_7th_shapes"
+    ],
+    "capo_strategy": [
+      "原调常比 capo 更重要，因为 open E/A blues 手型和低音弦位置很关键。"
+    ],
+    "voice_leading_focus": [
+      "V-IV-I 回落",
+      "chromatic turnaround",
+      "六度双音连接",
+      "低音 walk"
+    ]
+  },
+  "transition_preferences": {
+    "prefer_common_fingers": true,
+    "prefer_open_string_continuity": false,
+    "prefer_top_note_continuity": false,
+    "prefer_bass_step_motion": true,
+    "allow_position_movement": "medium"
+  }
+}

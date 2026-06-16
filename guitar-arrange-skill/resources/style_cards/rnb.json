@@ -1,0 +1,176 @@
+{
+  "style": "rnb",
+  "preferred_tags": [
+    "common",
+    "movable",
+    "jazz",
+    "open"
+  ],
+  "label_zh": "R&B",
+  "harmony": {
+    "core_principles": [
+      "R&B 和声重视 3rd、7th、9th 的色彩和声部连接。",
+      "根音不一定每次都在吉他上完整出现，可以让 bass 或低音线承担。",
+      "m7、maj7、9、sus、slash 是常用基础语言。",
+      "和弦变化可以更少，但每个 voicing 要有颜色和空间。"
+    ],
+    "chord_vocabulary": {
+      "default": [
+        "minor7",
+        "major7",
+        "dominant7",
+        "minor9",
+        "major9"
+      ],
+      "color": [
+        "13",
+        "11",
+        "sus9",
+        "slash",
+        "dim_passing"
+      ],
+      "cadence_tension": [
+        "ii-V",
+        "secondary_dominant",
+        "tritone_sub_with_care"
+      ],
+      "avoid_by_default": [
+        "full_six_string_dense_chords",
+        "plain_triads_only",
+        "heavy_power_chord"
+      ]
+    },
+    "common_moves": [
+      "ii-V-I 可以用小型 shell voicing 表达，不必弹完整六弦。",
+      "Imaj7 到 vi7 或 iii7 到 vi7 适合柔和循环。",
+      "ivm7 或 bVII13 可用于 neo-soul 式借用色彩。",
+      "半音下行 passing diminished 可连接两个目标和弦。",
+      "slash chord 可以让低音线级进，避免和声跳跃过硬。"
+    ],
+    "section_recipes": {
+      "intro": [
+        "用一到两个有颜色的 voicing 建立氛围，如 maj7/9/m9。"
+      ],
+      "verse": [
+        "和弦密度可以低，但 voicing 要保留 7th/9th。",
+        "避免全六弦铺满。"
+      ],
+      "pre_chorus": [
+        "加入 secondary dominant、slash 或上行低音线。"
+      ],
+      "chorus": [
+        "可稍微简化和声，让 hook 更清楚，但保留 m7/maj7 质感。"
+      ],
+      "bridge": [
+        "可加入 borrowed minor、dim passing、ii-V 或更浓的 9/13 色彩。"
+      ]
+    },
+    "reharmonization_moves": [
+      "minor triad 优先升级成 m7 或 m9。",
+      "major triad 可升级成 maj7、6/9 或 add9。",
+      "dominant7 可根据旋律扩展成 9、13 或 7sus。",
+      "普通 V-I 可以替换成 ii-V-I，但不要让吉他 voicing 过满。",
+      "用上方三和弦或无根 voicing 让吉他避开 bass。"
+    ],
+    "arrangement_hints": [
+      "R&B 编配优先保留 3rd、7th、9th 的颜色，少弹满六根弦。",
+      "低音线和内声部连接比和弦数量更重要。",
+      "m7、maj7、9、slash 是默认应该考虑保留的色彩。",
+      "如果用户是初学者，可以保留和弦属性但选更简单的小型 voicing。"
+    ],
+    "llm_usage": {
+      "prefer": [
+        "m7",
+        "maj7",
+        "9th",
+        "shell voicing",
+        "slash bass motion"
+      ],
+      "use_with_care": [
+        "13th",
+        "altered dominant",
+        "tritone substitute",
+        "passing diminished"
+      ],
+      "do_not": [
+        "不要把所有和弦都简化成普通三和弦",
+        "不要让吉他和 bass 抢低频"
+      ]
+    }
+  },
+  "guitar_arrangement": {
+    "core_goal": "保留柔和和声色彩和低音线流动，用小型 voicing 支撑人声与低频空间。",
+    "chord_language": {
+      "prefer": [
+        "minor7",
+        "major7",
+        "dominant7",
+        "ninth",
+        "minor9",
+        "major9",
+        "slash"
+      ],
+      "use_with_care": [
+        "thirteenth",
+        "eleventh",
+        "altered"
+      ],
+      "avoid_by_default": [
+        "full_six_string_dense_chords",
+        "dense_distorted_chords"
+      ]
+    },
+    "voicing_strategy": [
+      "优先三到四个音的小型 voicing，避免每个和弦都弹满六根弦。",
+      "保留 3rd、7th、9th 等 guide-tone/color-tone，根音可交给 bass 或低音线处理。",
+      "用 slash chord 或半音/全音低音移动连接相邻和弦。",
+      "m7、maj7、9 是默认可保留的色彩，不要轻易简化成普通三和弦。"
+    ],
+    "section_usage": {
+      "verse": [
+        "sparse comping",
+        "m7/maj7/9",
+        "低音线连接"
+      ],
+      "pre_chorus": [
+        "dominant7 或 slash 增加推动"
+      ],
+      "chorus": [
+        "重复 hook voicing",
+        "更稳定的反拍切分"
+      ],
+      "bridge": [
+        "可加入更 jazz/soul 的替代色彩"
+      ]
+    },
+    "llm_prompt_hint": "R&B 吉他要避免粗暴全扫；优先小型 m7/maj7/9 voicing、切分、留白和低音线连接。",
+    "progression_templates": [
+      "ii-V-I",
+      "Imaj7-vi7-ii7-V7",
+      "iii7-vi7-ii7-V7",
+      "ivm7-bVII7-Imaj7"
+    ],
+    "voicing_families": [
+      "shell_3_7",
+      "small_4_note",
+      "rootless_color",
+      "partial_barre"
+    ],
+    "capo_strategy": [
+      "capo 可用于弹唱简化，但 R&B 小型 movable voicing 往往比开放大和弦更合适。"
+    ],
+    "voice_leading_focus": [
+      "3rd/7th guide tones",
+      "半音内声部",
+      "低音线级进",
+      "避免满六弦"
+    ]
+  },
+  "transition_preferences": {
+    "prefer_common_fingers": true,
+    "prefer_open_string_continuity": false,
+    "prefer_top_note_continuity": true,
+    "prefer_bass_step_motion": true,
+    "allow_position_movement": "medium"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "version": "1.0.0",
+  "max_capo": 5,
+  "preferred_capo_bonus": 4.0,
+  "capo_penalty_per_fret": 0.55,
+  "high_capo_threshold": 4,
+  "high_capo_extra_penalty": 2.0,
+  "weights": {
+    "open_chord": 4.0,
+    "beginner_common_shape": 3.0,
+    "known_chord": 2.0,
+    "missing_voicing": -8.0,
+    "simplified_chord": -1.5,
+    "difficulty_above_target": -1.0,
+    "barre_beginner": -7.0,
+    "barre_intermediate": -3.0,
+    "slash_chord_penalty": -1.0,
+    "complex_extension_penalty": -0.6
+  },
+  "beginner_common_shapes": ["G", "C", "D", "Em", "Am", "A", "E", "Dm", "E7", "A7", "D7"],
+  "capo_reason_templates": {
+    "avoid_barre": "Capo {capo} 后可以减少横按和弦，降低弹唱难度。",
+    "open_shapes": "Capo {capo} 后开放和弦比例更高，换和弦更稳定。",
+    "preferred": "使用用户指定的 Capo {capo}，并保留可弹性检查。"
+  }
+}
+

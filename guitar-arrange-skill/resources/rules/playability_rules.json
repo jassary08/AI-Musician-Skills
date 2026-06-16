@@ -1,0 +1,35 @@
+{
+  "version": "1.0.0",
+  "levels": {
+    "beginner": {
+      "max_average_difficulty": 2.0,
+      "max_barre_count": 0,
+      "prefer_open_ratio": 0.75,
+      "max_position": 3,
+      "allow_complex_extensions": false,
+      "practice_tempo_ratio": 0.7
+    },
+    "intermediate": {
+      "max_average_difficulty": 3.5,
+      "max_barre_count": 2,
+      "prefer_open_ratio": 0.45,
+      "max_position": 7,
+      "allow_complex_extensions": true,
+      "practice_tempo_ratio": 0.8
+    }
+  },
+  "hard_avoid_for_beginner": ["F", "Bm", "F#m", "C#m", "G#m", "Bb", "Bbm"],
+  "safe_open_families": {
+    "g_family": ["G", "D", "Em", "C", "Cadd9", "Em7", "Dadd11", "Am"],
+    "c_family": ["C", "G", "Am", "Fmaj7", "Dm", "Em"],
+    "d_family": ["D", "A", "Bm", "G", "Em", "A7"],
+    "a_family": ["A", "E", "F#m", "D", "Bm", "E7"],
+    "e_family": ["E", "B7", "C#m", "A", "F#m"]
+  },
+  "warning_thresholds": {
+    "missing_voicing": 1,
+    "beginner_barre": 1,
+    "average_difficulty_margin": 0.25
+  }
+}
+

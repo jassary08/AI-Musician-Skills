@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "quality_rewrites": [
+    {"pattern": "maj7", "beginner": "", "intermediate": "maj7"},
+    {"pattern": "m7b5", "beginner": "m", "intermediate": "m7"},
+    {"pattern": "m7", "beginner": "m", "intermediate": "m7"},
+    {"pattern": "7", "beginner": "7", "intermediate": "7"},
+    {"pattern": "sus4", "beginner": "", "intermediate": "sus4"},
+    {"pattern": "sus2", "beginner": "", "intermediate": "sus2"},
+    {"pattern": "add9", "beginner": "", "intermediate": "add9"},
+    {"pattern": "dim", "beginner": "m", "intermediate": "dim"},
+    {"pattern": "aug", "beginner": "", "intermediate": "aug"}
+  ],
+  "slash_chords": {
+    "beginner": "drop_bass",
+    "intermediate": "keep_if_voicing_exists"
+  },
+  "enharmonic_preferences": {
+    "flat_keys": ["F", "Bb", "Eb", "Ab", "Db", "Gb", "Cb", "Dm", "Gm", "Cm", "Fm", "Bbm"],
+    "sharp_keys": ["G", "D", "A", "E", "B", "F#", "C#", "Em", "Bm", "F#m", "C#m", "G#m"]
+  }
+}
+

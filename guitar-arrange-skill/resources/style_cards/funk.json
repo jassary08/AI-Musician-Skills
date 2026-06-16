@@ -1,0 +1,166 @@
+{
+  "style": "funk",
+  "preferred_tags": [
+    "movable",
+    "barre",
+    "common",
+    "jazz"
+  ],
+  "label_zh": "放克",
+  "harmony": {
+    "core_principles": [
+      "Funk 和声通常不靠频繁换和弦，而靠一个短 voicing 的反复、切分和音色位置。",
+      "dominant9、minor7、7sus、partial chord 是吉他常用核心。",
+      "很多时候一个和弦持续很久，关键在 voicing 选择和留白。",
+      "和弦应短、干、清楚，避免长时间六弦铺底。"
+    ],
+    "chord_vocabulary": {
+      "default": [
+        "dominant9",
+        "dominant7",
+        "minor7",
+        "7sus",
+        "partial_chord"
+      ],
+      "color": [
+        "13",
+        "minor9",
+        "slash",
+        "chromatic_stab"
+      ],
+      "cadence_tension": [
+        "static_dominant_vamp",
+        "i7-IV7",
+        "chromatic_approach_stabs"
+      ],
+      "avoid_by_default": [
+        "long_sustain_full_strums",
+        "heavy_distortion",
+        "wide_open_arpeggio"
+      ]
+    },
+    "common_moves": [
+      "单个 9 和弦 vamp 可以构成完整段落，变化来自节奏位置和装饰。",
+      "i7 到 IV7/IV9 是常见 funk/blues-funk 运动。",
+      "dominant9 可以用小型四弦 voicing 表达，根音可省略。",
+      "半音上下 approach chord 适合做短促 stab。",
+      "m7 到 7sus 或 9 的小范围移动比大和弦跳跃更有效。"
+    ],
+    "section_recipes": {
+      "intro": [
+        "用一个短促高辨识度 voicing 建立 vamp。"
+      ],
+      "verse": [
+        "保持少量和弦，重点是小型 voicing 和空间。"
+      ],
+      "pre_chorus": [
+        "可以通过半音 approach 或换到 IV9 增加变化。"
+      ],
+      "chorus": [
+        "用更明亮的 partial chord 或重复 hook voicing。"
+      ],
+      "bridge": [
+        "减少和弦数量，用单音 answer 或 chromatic stabs 做对比。"
+      ]
+    },
+    "reharmonization_moves": [
+      "普通 dominant7 优先升级成 dominant9 或 13。",
+      "普通 minor 可升级成 m7，但不要弹太满。",
+      "持续一个和弦时，准备两个相近 partial voicing 做 call-response。",
+      "使用半音 approach chord 时要短促，不要长时间停留。"
+    ],
+    "arrangement_hints": [
+      "Funk 编配优先小型 dominant9/m7/7sus voicing，而不是完整六弦大和弦。",
+      "和弦数量可以少，但每个 voicing 要短、干、位置清楚。",
+      "半音 approach 和 partial chord 比复杂进行更常用。",
+      "允许更多中高把位移动，但要保持手型小。"
+    ],
+    "llm_usage": {
+      "prefer": [
+        "dominant9",
+        "minor7",
+        "7sus",
+        "partial voicing",
+        "chromatic approach stabs"
+      ],
+      "use_with_care": [
+        "13th",
+        "slash",
+        "minor9"
+      ],
+      "do_not": [
+        "不要长时间六弦全扫",
+        "不要用厚失真堆满和弦"
+      ]
+    }
+  },
+  "guitar_arrangement": {
+    "core_goal": "用短促、干净的小型和弦与 dominant9/m7 色彩建立放克吉他和声质感。",
+    "chord_language": {
+      "prefer": [
+        "dominant9",
+        "dominant7",
+        "minor7",
+        "slash",
+        "partial_chord"
+      ],
+      "use_with_care": [
+        "major7",
+        "minor9",
+        "thirteenth"
+      ],
+      "avoid_by_default": [
+        "long_sustain_full_strums",
+        "heavy_distortion",
+        "wide_arpeggio_without_chord_clarity"
+      ]
+    },
+    "voicing_strategy": [
+      "优先两到四根弦的小型局部和弦，不要每拍扫满六根弦。",
+      "dominant9、m7、7sus、partial chord 很适合做短促 chord stab。",
+      "多个吉他声部时可拆成一个 chord stab 声部和一个单音 answer 声部。",
+      "如果只有一把吉他，优先保证发声位置短、干、准。"
+    ],
+    "section_usage": {
+      "verse": [
+        "partial chord stabs"
+      ],
+      "pre_chorus": [],
+      "chorus": [
+        "更明确的 syncopated hook"
+      ],
+      "bridge": [
+        "single-note rhythmic motif"
+      ]
+    },
+    "llm_prompt_hint": "放克吉他优先选择 dominant9、m7、7sus 等小型和弦；不要长音大扫，也不要让 voicing 过宽。",
+    "progression_templates": [
+      "static_9_vamp",
+      "i7-IV9",
+      "I9-bVII9",
+      "minor7_to_dominant9"
+    ],
+    "voicing_families": [
+      "top_four_string_9th",
+      "partial_barre",
+      "two_or_three_note_stabs",
+      "rootless_dominant9"
+    ],
+    "capo_strategy": [
+      "funk 通常优先选择把位和小型 voicing，不优先依赖 capo。"
+    ],
+    "voice_leading_focus": [
+      "小范围把位移动",
+      "短促 partial chord",
+      "半音 approach",
+      "避免开放弦拖尾"
+    ]
+  },
+  "transition_preferences": {
+    "prefer_common_fingers": true,
+    "prefer_open_string_continuity": false,
+    "prefer_top_note_continuity": true,
+    "prefer_bass_step_motion": false,
+    "allow_position_movement": "high"
+  }
+}
