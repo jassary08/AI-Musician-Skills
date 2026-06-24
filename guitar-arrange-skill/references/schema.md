@@ -1,15 +1,10 @@
 # Guitar Harmony Arrangement Schema
 
-The skill now has two input levels:
+The skill has one user-facing input style: a natural-language request. The implementation may still return structured JSON for downstream systems, but users should not be asked to prepare a full structured payload.
 
-1. Broad composition input: natural-language request plus optional constraints.
-2. Deterministic realization input: explicit chord progression for capo and voicing selection.
+Use `scripts/compose_guitar.py` for all arrangement requests.
 
-Use `scripts/compose_guitar.py` for broad requests. Use `scripts/arrange_guitar.py` only when the chord progression is already fixed.
-
-## Broad Input
-
-Minimal input:
+## Minimal Input
 
 ```json
 {
@@ -17,65 +12,30 @@ Minimal input:
 }
 ```
 
-Full input:
+The CLI can also receive the request as a positional argument:
 
-```json
-{
-  "request": "我有 C - Am - F - G，帮我改得更 R&B 一点，但不要太难",
-  "source_chords": ["C", "Am", "F", "G"],
-  "music_context": {
-    "key": "C major",
-    "style": "rnb",
-    "section": "chorus",
-    "bar_count": 4,
-    "time_signature": "4/4",
-    "tempo": 88
-  },
-  "harmony_goal": {
-    "mood": "warm",
-    "energy": "medium",
-    "color_level": "colorful",
-    "tension": "medium"
-  },
-  "guitar_constraints": {
-    "user_level": "intermediate",
-    "capo_policy": "no_capo",
-    "preferred_capo": null,
-    "allow_barre": true,
-    "prefer_common_voicings": true,
-    "known_chords": []
-  },
-  "output": {
-    "include_diagrams": true,
-    "include_degrees": true,
-    "include_chordpro": true,
-    "language": "zh-CN"
-  }
-}
+```bash
+python scripts/compose_guitar.py '写一段温暖的 C 大调流行副歌，适合初学者吉他弹唱，不要横按' --pretty
 ```
 
-## Broad Input Fields
+## Natural-Language Information The Skill Can Infer
 
-- `request`: Natural-language user intent. This is the only required field for broad composition.
-- `source_chords`: Optional fixed or seed progression. If present, the planner may preserve or lightly recolor it.
-- `music_context.key`: Optional key, such as `C major`, `E minor`, `Bb major`.
-- `music_context.style`: `pop`, `rock`, `rnb`, `blues`, `funk`, or omitted for inference.
-- `music_context.section`: `intro`, `verse`, `pre_chorus`, `chorus`, `bridge`, `interlude`, `outro`, `12bar`, or omitted.
-- `music_context.bar_count`: Optional target length.
-- `harmony_goal.color_level`: `plain`, `light`, or `colorful`.
-- `guitar_constraints.user_level`: `beginner` or `intermediate`.
-- `guitar_constraints.capo_policy`: `auto`, `no_capo`, `prefer_capo`, or `fixed`.
-- `guitar_constraints.preferred_capo`: Integer capo position when fixed.
+The request can mention:
 
-Top-level aliases are accepted for backward compatibility:
+- key, such as `C 大调`, `E minor`, `Bb major`
+- style: `pop`, `rock`, `rnb`, `blues`, `funk`
+- section: verse, chorus, bridge, intro, outro, 12-bar blues
+- difficulty: beginner or intermediate
+- capo policy: no capo, prefer capo, fixed capo
+- source chords, such as `A E F#m D`
+- harmony color, such as plain triads, seventh chords, maj7, 9, sus, add9
+- output goals, such as chord diagrams or practice material
 
-- `key`, `style`, `section`, `bar_count`, `time_signature`, `tempo`, `bpm`
-- `chords` as an alias of `source_chords`
-- `user_level`, `preferred_capo`, `capo_policy`, `known_chords`
+Automation may pass optional JSON fields such as `music_context`, `harmony_goal`, `guitar_constraints`, or `source_chords`, but these are convenience fields, not required user input.
 
-## Broad Output
+## Output
 
-`compose_guitar.py` returns the normal arranger output plus a `composition` block:
+`compose_guitar.py` returns a complete arrangement result:
 
 ```json
 {
@@ -115,12 +75,12 @@ Top-level aliases are accepted for backward compatibility:
 
 `planned_chords` preserves the full bar-level progression. `arranger_chords` is the compact progression used for unique voicing selection when repeated bars would only duplicate chord diagrams.
 
-## Diverse Exports
+## Exports
 
-`exports` intentionally contains several output forms for different consumers:
+`exports` contains several output forms for different consumers:
 
 - `progression_grid`: bar-level rows for compact display, including chord text and degree text.
-- `lead_sheet`: structured lead-sheet data for frontend rendering, including key, style, section, capo, bars, and unique voicings.
+- `lead_sheet`: frontend-friendly lead-sheet data, including key, style, section, capo, bars, and unique voicings.
 - `practice_text`: plain-text sheet suitable for terminal preview, notes, or quick sharing.
 - `chordpro_full`: ChordPro text that preserves the full planned bar progression.
 - `voicing_summary`: compact list of selected shapes, frets, barres, difficulty, commonness, and annotation status.
@@ -128,59 +88,10 @@ Top-level aliases are accepted for backward compatibility:
 - `chord_diagrams_png`: optional PNG path when `--diagram-png-output` is provided.
 - `files`: written export paths when `--export-dir` is provided.
 
-Example `progression_grid`:
-
-```json
-{
-  "columns": 4,
-  "text": "| Em7 | Em7 | Em7 | Em7 |\n| Am7 | Am7 | Em7 | Em7 |\n| B7 | Am7 | Em7 | B7 |",
-  "degrees_text": "| i7 | i7 | i7 | i7 |\n| iv7 | iv7 | i7 | i7 |\n| V7 | iv7 | i7 | V7 |"
-}
-```
-
-Example `lead_sheet.bars` item:
-
-```json
-{
-  "bar": 1,
-  "section": "chorus",
-  "chord": "Em7",
-  "degree": "i7"
-}
-```
-
-## Deterministic Realization Input
-
-Use this only when the chord progression is already decided:
-
-```json
-{
-  "task": "guitar_arrange",
-  "key": "A major",
-  "bpm": 92,
-  "time_signature": "4/4",
-  "section": "chorus",
-  "style": "pop",
-  "user_level": "beginner",
-  "goal": "适合弹唱，避免横按",
-  "chords": ["A", "E", "F#m", "D"],
-  "preferred_capo": null,
-  "known_chords": []
-}
-```
-
 ## PNG Chord Diagram Export
 
-Broad request:
-
 ```bash
-python scripts/compose_guitar.py --input-json '{"request":"写一段 E 小调经典 blues 十二小节，常用吉他弹法，不用变调夹"}' --diagram-png-output /tmp/blues.png --pretty
-```
-
-Fixed progression:
-
-```bash
-python scripts/arrange_guitar.py --input-json '{"key":"C major","style":"pop","section":"chorus","user_level":"intermediate","preferred_capo":0,"time_signature":"4/4","chords":["C","Am","F","G"]}' --diagram-png-output /tmp/1645.png --pretty
+python scripts/compose_guitar.py '写一段 E 小调经典 blues 十二小节，常用吉他弹法，不用变调夹' --diagram-png-output /tmp/blues.png --pretty
 ```
 
 ## File Export
@@ -188,7 +99,7 @@ python scripts/arrange_guitar.py --input-json '{"key":"C major","style":"pop","s
 Use `--export-dir` when the caller wants multiple artifacts instead of only stdout JSON:
 
 ```bash
-python scripts/compose_guitar.py --input-json '{"request":"写一段 E 小调经典 blues 十二小节，常用吉他弹法，不用变调夹"}' --export-dir /tmp/chordcraft-export --pretty
+python scripts/compose_guitar.py '把 C Am F G 这组和弦改成 R&B / Neo-soul 色彩，想要 maj7、m7 和 9 的感觉，难度中等' --export-dir /tmp/chordcraft-export --pretty
 ```
 
 Generated files:

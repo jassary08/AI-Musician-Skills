@@ -1,0 +1,154 @@
+{
+  "title": "AI-ChordCraft Guitar Arrangement",
+  "key": "E minor",
+  "style": "blues",
+  "section": "chorus",
+  "bar_count": 12,
+  "capo": 0,
+  "play_as_key": "E minor",
+  "bars": [
+    {
+      "bar": 1,
+      "section": "chorus",
+      "chord": "Em7",
+      "degree": "i7"
+    },
+    {
+      "bar": 2,
+      "section": "chorus",
+      "chord": "Em7",
+      "degree": "i7"
+    },
+    {
+      "bar": 3,
+      "section": "chorus",
+      "chord": "Em7",
+      "degree": "i7"
+    },
+    {
+      "bar": 4,
+      "section": "chorus",
+      "chord": "Em7",
+      "degree": "i7"
+    },
+    {
+      "bar": 5,
+      "section": "chorus",
+      "chord": "Am7",
+      "degree": "iv7"
+    },
+    {
+      "bar": 6,
+      "section": "chorus",
+      "chord": "Am7",
+      "degree": "iv7"
+    },
+    {
+      "bar": 7,
+      "section": "chorus",
+      "chord": "Em7",
+      "degree": "i7"
+    },
+    {
+      "bar": 8,
+      "section": "chorus",
+      "chord": "Em7",
+      "degree": "i7"
+    },
+    {
+      "bar": 9,
+      "section": "chorus",
+      "chord": "B7",
+      "degree": "V7"
+    },
+    {
+      "bar": 10,
+      "section": "chorus",
+      "chord": "Am7",
+      "degree": "iv7"
+    },
+    {
+      "bar": 11,
+      "section": "chorus",
+      "chord": "Em7",
+      "degree": "i7"
+    },
+    {
+      "bar": 12,
+      "section": "chorus",
+      "chord": "B7",
+      "degree": "V7"
+    }
+  ],
+  "unique_voicings": [
+    {
+      "chord": "Em7",
+      "shape": "022030",
+      "frets": [
+        0,
+        2,
+        2,
+        0,
+        3,
+        0
+      ],
+      "barres": [],
+      "difficulty": 1,
+      "commonness": 5,
+      "status": "preferred",
+      "contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open"
+      ]
+    },
+    {
+      "chord": "Am7",
+      "shape": "x02010",
+      "frets": [
+        -1,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "barres": [],
+      "difficulty": 1,
+      "commonness": 5,
+      "status": "preferred",
+      "contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open"
+      ]
+    },
+    {
+      "chord": "B7",
+      "shape": "x21202",
+      "frets": [
+        -1,
+        2,
+        1,
+        2,
+        0,
+        2
+      ],
+      "barres": [],
+      "difficulty": 1,
+      "commonness": 5,
+      "status": "preferred",
+      "contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open"
+      ]
+    }
+  ]
+}

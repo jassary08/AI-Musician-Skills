@@ -1,0 +1,1326 @@
+{
+  "title": "AI-ChordCraft Guitar Arrangement",
+  "key": "C major",
+  "bpm": 92,
+  "time_signature": "4/4",
+  "section": "chorus",
+  "style": "pop",
+  "user_level": "beginner",
+  "capo": 5,
+  "play_as_key": "G major",
+  "display_chords": [
+    "G",
+    "D",
+    "Em",
+    "C",
+    "G",
+    "D",
+    "Em",
+    "C"
+  ],
+  "voicings": [
+    {
+      "chord": "G",
+      "voicing_symbol": "G",
+      "shape": "320003",
+      "frets": [
+        3,
+        2,
+        0,
+        0,
+        0,
+        3
+      ],
+      "fingers": [
+        2,
+        1,
+        0,
+        0,
+        0,
+        3
+      ],
+      "position": 1,
+      "barres": [],
+      "difficulty": 1,
+      "tags": [
+        "beginner",
+        "common",
+        "external",
+        "open"
+      ],
+      "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+      "commonness": 5,
+      "annotation_status": "preferred",
+      "annotation_contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open"
+      ],
+      "coloration": null,
+      "coloration_reason": ""
+    },
+    {
+      "chord": "D",
+      "voicing_symbol": "D",
+      "shape": "xx0232",
+      "frets": [
+        -1,
+        -1,
+        0,
+        2,
+        3,
+        2
+      ],
+      "fingers": [
+        0,
+        0,
+        0,
+        1,
+        3,
+        2
+      ],
+      "position": 1,
+      "barres": [],
+      "difficulty": 1,
+      "tags": [
+        "beginner",
+        "common",
+        "external",
+        "open"
+      ],
+      "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+      "commonness": 5,
+      "annotation_status": "preferred",
+      "annotation_contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open",
+        "partial",
+        "small_voicing"
+      ],
+      "coloration": null,
+      "coloration_reason": ""
+    },
+    {
+      "chord": "Em",
+      "voicing_symbol": "Em",
+      "shape": "022000",
+      "frets": [
+        0,
+        2,
+        2,
+        0,
+        0,
+        0
+      ],
+      "fingers": [
+        0,
+        2,
+        3,
+        0,
+        0,
+        0
+      ],
+      "position": 1,
+      "barres": [],
+      "difficulty": 1,
+      "tags": [
+        "beginner",
+        "common",
+        "external",
+        "open"
+      ],
+      "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+      "commonness": 5,
+      "annotation_status": "preferred",
+      "annotation_contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open"
+      ],
+      "coloration": null,
+      "coloration_reason": ""
+    },
+    {
+      "chord": "C",
+      "voicing_symbol": "C",
+      "shape": "x32010",
+      "frets": [
+        -1,
+        3,
+        2,
+        0,
+        1,
+        0
+      ],
+      "fingers": [
+        0,
+        3,
+        2,
+        0,
+        1,
+        0
+      ],
+      "position": 1,
+      "barres": [],
+      "difficulty": 1,
+      "tags": [
+        "beginner",
+        "common",
+        "external",
+        "open"
+      ],
+      "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+      "commonness": 5,
+      "annotation_status": "preferred",
+      "annotation_contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open"
+      ],
+      "coloration": null,
+      "coloration_reason": ""
+    },
+    {
+      "chord": "G",
+      "voicing_symbol": "G",
+      "shape": "320003",
+      "frets": [
+        3,
+        2,
+        0,
+        0,
+        0,
+        3
+      ],
+      "fingers": [
+        2,
+        1,
+        0,
+        0,
+        0,
+        3
+      ],
+      "position": 1,
+      "barres": [],
+      "difficulty": 1,
+      "tags": [
+        "beginner",
+        "common",
+        "external",
+        "open"
+      ],
+      "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+      "commonness": 5,
+      "annotation_status": "preferred",
+      "annotation_contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open"
+      ],
+      "coloration": null,
+      "coloration_reason": ""
+    },
+    {
+      "chord": "D",
+      "voicing_symbol": "D",
+      "shape": "xx0232",
+      "frets": [
+        -1,
+        -1,
+        0,
+        2,
+        3,
+        2
+      ],
+      "fingers": [
+        0,
+        0,
+        0,
+        1,
+        3,
+        2
+      ],
+      "position": 1,
+      "barres": [],
+      "difficulty": 1,
+      "tags": [
+        "beginner",
+        "common",
+        "external",
+        "open"
+      ],
+      "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+      "commonness": 5,
+      "annotation_status": "preferred",
+      "annotation_contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open",
+        "partial",
+        "small_voicing"
+      ],
+      "coloration": null,
+      "coloration_reason": ""
+    },
+    {
+      "chord": "Em",
+      "voicing_symbol": "Em",
+      "shape": "022000",
+      "frets": [
+        0,
+        2,
+        2,
+        0,
+        0,
+        0
+      ],
+      "fingers": [
+        0,
+        2,
+        3,
+        0,
+        0,
+        0
+      ],
+      "position": 1,
+      "barres": [],
+      "difficulty": 1,
+      "tags": [
+        "beginner",
+        "common",
+        "external",
+        "open"
+      ],
+      "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+      "commonness": 5,
+      "annotation_status": "preferred",
+      "annotation_contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open"
+      ],
+      "coloration": null,
+      "coloration_reason": ""
+    },
+    {
+      "chord": "C",
+      "voicing_symbol": "C",
+      "shape": "x32010",
+      "frets": [
+        -1,
+        3,
+        2,
+        0,
+        1,
+        0
+      ],
+      "fingers": [
+        0,
+        3,
+        2,
+        0,
+        1,
+        0
+      ],
+      "position": 1,
+      "barres": [],
+      "difficulty": 1,
+      "tags": [
+        "beginner",
+        "common",
+        "external",
+        "open"
+      ],
+      "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+      "commonness": 5,
+      "annotation_status": "preferred",
+      "annotation_contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open"
+      ],
+      "coloration": null,
+      "coloration_reason": ""
+    }
+  ],
+  "style_guidance": {
+    "harmony": {
+      "core_principles": [
+        "以清晰的功能和声为骨架，优先保证旋律、人声和低音线自然。",
+        "常见 I-V-vi-IV、vi-IV-I-V、I-vi-IV-V 可以作为基础，但要用转位、sus、add9 和保留音避免机械感。",
+        "副歌通常比主歌更直接，主歌可以用更轻的色彩和更少的低音运动。",
+        "复杂和弦只服务情绪推进，不为了复杂而替换。"
+      ],
+      "chord_vocabulary": {
+        "default": [
+          "major",
+          "minor",
+          "sus2",
+          "sus4",
+          "add9"
+        ],
+        "color": [
+          "minor7",
+          "major7",
+          "slash",
+          "6"
+        ],
+        "cadence_tension": [
+          "dominant7",
+          "secondary_dominant"
+        ],
+        "avoid_by_default": [
+          "altered_dominant",
+          "dense_jazz_extensions",
+          "diminished_chain"
+        ]
+      },
+      "common_moves": [
+        "I 到 V 可保留共同高音，或用 Iadd9 / Vsus4 让旋律更连贯。",
+        "vi 到 IV 适合保持高音 3 品或开放弦，形成流行弹唱的连续感。",
+        "V 到 vi 可以弱化解决感，用 sus4 或 add9 保持悬念。",
+        "IV 到 I 可用 IVadd9 或 IVmaj7 增加温暖，但副歌落点要清楚。",
+        "低音可以用 I - V/7 - vi - IV 这类斜杠连接让下行更顺。"
+      ],
+      "section_recipes": {
+        "intro": [
+          "使用主歌或副歌核心进行的简化版，优先建立调性。",
+          "可用 sus/add9 作为开场颜色。"
+        ],
+        "verse": [
+          "和声密度低一点，三和弦加少量 add9/m7 即可。",
+          "低音线尽量平稳，给人声留空间。"
+        ],
+        "pre_chorus": [
+          "增加 slash chord 或 secondary dominant，制造去副歌的方向。",
+          "可让低音上行或下行形成 build。"
+        ],
+        "chorus": [
+          "回到最清晰的功能进行，避免过度替代。",
+          "保留共同高音或开放弦，让整体更开阔。"
+        ],
+        "bridge": [
+          "可以短暂借用平行小调、bVII、iv 或 maj7 色彩，和主副歌形成对比。"
+        ]
+      },
+      "reharmonization_moves": [
+        "普通 major 可根据旋律改成 add9 或 sus2，但旋律音不能冲突。",
+        "普通 minor 可改成 m7 增加柔和度。",
+        "V 前可插入 ii 或 V/V，增强推进。",
+        "段落末尾可把 IV 改成 iv 或 bVII，形成轻微怀旧感。",
+        "旋律长音在 1 或 5 上时，优先用 sus/add 颜色而不是复杂替代。"
+      ],
+      "arrangement_hints": [
+        "流行编配先保证主和弦功能清楚，再用 add9、sus、m7、slash 做少量润色。",
+        "副歌优先直接、开阔、容易唱；主歌可以更克制。",
+        "如果用户要求“好听但不难”，优先选择开放和弦共同高音方案。",
+        "不要仅因为某个和弦高级就替换，旋律和低音线顺畅更重要。"
+      ],
+      "llm_usage": {
+        "prefer": [
+          "清晰功能进行",
+          "add9/sus 点缀",
+          "共同高音",
+          "斜杠低音线"
+        ],
+        "use_with_care": [
+          "secondary dominant",
+          "borrowed iv",
+          "bVII",
+          "maj7"
+        ],
+        "do_not": [
+          "不要把整段流行歌改成过密 jazz voicing",
+          "不要牺牲可唱性"
+        ]
+      }
+    },
+    "guitar_arrangement": {
+      "core_goal": "保持弹唱友好、和声清晰，用少量开放弦和色彩音提升质感。",
+      "chord_language": {
+        "prefer": [
+          "major",
+          "minor",
+          "add9",
+          "sus2",
+          "sus4",
+          "minor7",
+          "major7",
+          "slash"
+        ],
+        "use_with_care": [
+          "dominant7",
+          "ninth"
+        ],
+        "avoid_by_default": [
+          "altered",
+          "dense_jazz_extensions"
+        ]
+      },
+      "voicing_strategy": [
+        "优先开放把位和一把位常见手型。",
+        "在 I-V-vi-IV 等常见进行中保留共同高音或开放弦，形成连续的 shimmer/jangle。",
+        "用 add9、sus2、sus4、m7 替代部分普通三和弦，但不要破坏旋律和可唱性。",
+        "使用斜杠和弦时优先服务低音线级进，不要为了复杂而复杂。"
+      ],
+      "section_usage": {
+        "verse": [
+          "开放和弦",
+          "少量 add9/m7"
+        ],
+        "pre_chorus": [
+          "增加 slash 或 dominant7 制造推动"
+        ],
+        "chorus": [
+          "保持简单大/小三和弦骨架"
+        ],
+        "bridge": [
+          "可加入更明显的 sus/add 色彩或换把位"
+        ]
+      },
+      "llm_prompt_hint": "流行吉他编配先保证可唱性和换和弦顺畅；只在关键位置加入 add9、sus、m7、slash 等色彩。",
+      "progression_templates": [
+        "I-V-vi-IV",
+        "vi-IV-I-V",
+        "I-vi-IV-V",
+        "IV-I-V-vi"
+      ],
+      "voicing_families": [
+        "open_common",
+        "modern_open_high_3rd_fret",
+        "capo_play_as_G",
+        "capo_play_as_C"
+      ],
+      "capo_strategy": [
+        "优先寻找 G/C/D/A/E 家族开放手型。",
+        "如果原调有 F#m/Bm/F，可尝试 capo 2/4/5 转成开放和弦。"
+      ],
+      "voice_leading_focus": [
+        "共同高音",
+        "开放弦延续",
+        "低音级进",
+        "少换把"
+      ]
+    }
+  },
+  "practice_notes": [
+    "Capo 5 后可以把 C - G - Am - F - C - G - Am - F 转成 G - D - Em - C - G - D - Em - C，提高弹唱手感。",
+    "先用 70% 速度循环和弦，再逐渐提高到原速。",
+    "流行编配先保证主和弦功能清楚，再用 add9、sus、m7、slash 做少量润色。",
+    "编配目标：写一段温暖的 C 大调流行副歌，适合初学者吉他弹唱，不要横按"
+  ],
+  "exports": {
+    "chord_diagrams": [
+      {
+        "chord": "G",
+        "voicing_symbol": "G",
+        "shape": "320003",
+        "frets": [
+          3,
+          2,
+          0,
+          0,
+          0,
+          3
+        ],
+        "fingers": [
+          2,
+          1,
+          0,
+          0,
+          0,
+          3
+        ],
+        "position": 1,
+        "barres": [],
+        "difficulty": 1,
+        "tags": [
+          "beginner",
+          "common",
+          "external",
+          "open"
+        ],
+        "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+        "commonness": 5,
+        "annotation_status": "preferred",
+        "annotation_contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ],
+        "coloration": null,
+        "coloration_reason": ""
+      },
+      {
+        "chord": "D",
+        "voicing_symbol": "D",
+        "shape": "xx0232",
+        "frets": [
+          -1,
+          -1,
+          0,
+          2,
+          3,
+          2
+        ],
+        "fingers": [
+          0,
+          0,
+          0,
+          1,
+          3,
+          2
+        ],
+        "position": 1,
+        "barres": [],
+        "difficulty": 1,
+        "tags": [
+          "beginner",
+          "common",
+          "external",
+          "open"
+        ],
+        "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+        "commonness": 5,
+        "annotation_status": "preferred",
+        "annotation_contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open",
+          "partial",
+          "small_voicing"
+        ],
+        "coloration": null,
+        "coloration_reason": ""
+      },
+      {
+        "chord": "Em",
+        "voicing_symbol": "Em",
+        "shape": "022000",
+        "frets": [
+          0,
+          2,
+          2,
+          0,
+          0,
+          0
+        ],
+        "fingers": [
+          0,
+          2,
+          3,
+          0,
+          0,
+          0
+        ],
+        "position": 1,
+        "barres": [],
+        "difficulty": 1,
+        "tags": [
+          "beginner",
+          "common",
+          "external",
+          "open"
+        ],
+        "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+        "commonness": 5,
+        "annotation_status": "preferred",
+        "annotation_contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ],
+        "coloration": null,
+        "coloration_reason": ""
+      },
+      {
+        "chord": "C",
+        "voicing_symbol": "C",
+        "shape": "x32010",
+        "frets": [
+          -1,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "fingers": [
+          0,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "position": 1,
+        "barres": [],
+        "difficulty": 1,
+        "tags": [
+          "beginner",
+          "common",
+          "external",
+          "open"
+        ],
+        "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+        "commonness": 5,
+        "annotation_status": "preferred",
+        "annotation_contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ],
+        "coloration": null,
+        "coloration_reason": ""
+      },
+      {
+        "chord": "G",
+        "voicing_symbol": "G",
+        "shape": "320003",
+        "frets": [
+          3,
+          2,
+          0,
+          0,
+          0,
+          3
+        ],
+        "fingers": [
+          2,
+          1,
+          0,
+          0,
+          0,
+          3
+        ],
+        "position": 1,
+        "barres": [],
+        "difficulty": 1,
+        "tags": [
+          "beginner",
+          "common",
+          "external",
+          "open"
+        ],
+        "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+        "commonness": 5,
+        "annotation_status": "preferred",
+        "annotation_contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ],
+        "coloration": null,
+        "coloration_reason": ""
+      },
+      {
+        "chord": "D",
+        "voicing_symbol": "D",
+        "shape": "xx0232",
+        "frets": [
+          -1,
+          -1,
+          0,
+          2,
+          3,
+          2
+        ],
+        "fingers": [
+          0,
+          0,
+          0,
+          1,
+          3,
+          2
+        ],
+        "position": 1,
+        "barres": [],
+        "difficulty": 1,
+        "tags": [
+          "beginner",
+          "common",
+          "external",
+          "open"
+        ],
+        "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+        "commonness": 5,
+        "annotation_status": "preferred",
+        "annotation_contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open",
+          "partial",
+          "small_voicing"
+        ],
+        "coloration": null,
+        "coloration_reason": ""
+      },
+      {
+        "chord": "Em",
+        "voicing_symbol": "Em",
+        "shape": "022000",
+        "frets": [
+          0,
+          2,
+          2,
+          0,
+          0,
+          0
+        ],
+        "fingers": [
+          0,
+          2,
+          3,
+          0,
+          0,
+          0
+        ],
+        "position": 1,
+        "barres": [],
+        "difficulty": 1,
+        "tags": [
+          "beginner",
+          "common",
+          "external",
+          "open"
+        ],
+        "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+        "commonness": 5,
+        "annotation_status": "preferred",
+        "annotation_contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ],
+        "coloration": null,
+        "coloration_reason": ""
+      },
+      {
+        "chord": "C",
+        "voicing_symbol": "C",
+        "shape": "x32010",
+        "frets": [
+          -1,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "fingers": [
+          0,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "position": 1,
+        "barres": [],
+        "difficulty": 1,
+        "tags": [
+          "beginner",
+          "common",
+          "external",
+          "open"
+        ],
+        "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+        "commonness": 5,
+        "annotation_status": "preferred",
+        "annotation_contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ],
+        "coloration": null,
+        "coloration_reason": ""
+      }
+    ],
+    "chord_diagrams_png": "../examples/01-pop-chorus-beginner/chord-diagrams.png",
+    "chordpro": "{title: AI-ChordCraft Guitar Arrangement}\n{key: C major}\n{capo: 5}\n{tempo: 92}\n\n{start_of_chorus}\n[G] [D] [Em] [C] [G] [D] [Em] [C]\n{end_of_chorus}\n",
+    "progression_grid": {
+      "columns": 4,
+      "rows": [
+        [
+          {
+            "bar": 1,
+            "section": "section",
+            "chord": "C",
+            "degree": "I"
+          },
+          {
+            "bar": 2,
+            "section": "section",
+            "chord": "G",
+            "degree": "V"
+          },
+          {
+            "bar": 3,
+            "section": "section",
+            "chord": "Am",
+            "degree": "vi"
+          },
+          {
+            "bar": 4,
+            "section": "section",
+            "chord": "F",
+            "degree": "IV"
+          }
+        ],
+        [
+          {
+            "bar": 5,
+            "section": "section",
+            "chord": "C",
+            "degree": "I"
+          },
+          {
+            "bar": 6,
+            "section": "section",
+            "chord": "G",
+            "degree": "V"
+          },
+          {
+            "bar": 7,
+            "section": "section",
+            "chord": "Am",
+            "degree": "vi"
+          },
+          {
+            "bar": 8,
+            "section": "section",
+            "chord": "F",
+            "degree": "IV"
+          }
+        ]
+      ],
+      "text": "| C | G | Am | F |\n| C | G | Am | F |",
+      "degrees_text": "| I | V | vi | IV |\n| I | V | vi | IV |"
+    },
+    "lead_sheet": {
+      "title": "AI-ChordCraft Guitar Arrangement",
+      "key": "C major",
+      "style": "pop",
+      "section": "chorus",
+      "bar_count": 8,
+      "capo": 5,
+      "play_as_key": "G major",
+      "bars": [
+        {
+          "bar": 1,
+          "section": "chorus",
+          "chord": "C",
+          "degree": "I"
+        },
+        {
+          "bar": 2,
+          "section": "chorus",
+          "chord": "G",
+          "degree": "V"
+        },
+        {
+          "bar": 3,
+          "section": "chorus",
+          "chord": "Am",
+          "degree": "vi"
+        },
+        {
+          "bar": 4,
+          "section": "chorus",
+          "chord": "F",
+          "degree": "IV"
+        },
+        {
+          "bar": 5,
+          "section": "chorus",
+          "chord": "C",
+          "degree": "I"
+        },
+        {
+          "bar": 6,
+          "section": "chorus",
+          "chord": "G",
+          "degree": "V"
+        },
+        {
+          "bar": 7,
+          "section": "chorus",
+          "chord": "Am",
+          "degree": "vi"
+        },
+        {
+          "bar": 8,
+          "section": "chorus",
+          "chord": "F",
+          "degree": "IV"
+        }
+      ],
+      "unique_voicings": [
+        {
+          "chord": "G",
+          "shape": "320003",
+          "frets": [
+            3,
+            2,
+            0,
+            0,
+            0,
+            3
+          ],
+          "barres": [],
+          "difficulty": 1,
+          "commonness": 5,
+          "status": "preferred",
+          "contexts": [
+            "beginner",
+            "campfire",
+            "compact",
+            "low_position",
+            "open"
+          ]
+        },
+        {
+          "chord": "D",
+          "shape": "xx0232",
+          "frets": [
+            -1,
+            -1,
+            0,
+            2,
+            3,
+            2
+          ],
+          "barres": [],
+          "difficulty": 1,
+          "commonness": 5,
+          "status": "preferred",
+          "contexts": [
+            "beginner",
+            "campfire",
+            "compact",
+            "low_position",
+            "open",
+            "partial",
+            "small_voicing"
+          ]
+        },
+        {
+          "chord": "Em",
+          "shape": "022000",
+          "frets": [
+            0,
+            2,
+            2,
+            0,
+            0,
+            0
+          ],
+          "barres": [],
+          "difficulty": 1,
+          "commonness": 5,
+          "status": "preferred",
+          "contexts": [
+            "beginner",
+            "campfire",
+            "compact",
+            "low_position",
+            "open"
+          ]
+        },
+        {
+          "chord": "C",
+          "shape": "x32010",
+          "frets": [
+            -1,
+            3,
+            2,
+            0,
+            1,
+            0
+          ],
+          "barres": [],
+          "difficulty": 1,
+          "commonness": 5,
+          "status": "preferred",
+          "contexts": [
+            "beginner",
+            "campfire",
+            "compact",
+            "low_position",
+            "open"
+          ]
+        }
+      ]
+    },
+    "practice_text": "AI-ChordCraft Guitar Lead Sheet\nKey: C major    Style: pop    Capo: 5\n\nProgression:\n| C | G | Am | F |\n| C | G | Am | F |\n\nDegrees:\n| I | V | vi | IV |\n| I | V | vi | IV |\n\nVoicings:\n- G: 320003 (commonness=5, status=preferred)\n- D: xx0232 (commonness=5, status=preferred)\n- Em: 022000 (commonness=5, status=preferred)\n- C: x32010 (commonness=5, status=preferred)\n- G: 320003 (commonness=5, status=preferred)\n- D: xx0232 (commonness=5, status=preferred)\n- Em: 022000 (commonness=5, status=preferred)\n- C: x32010 (commonness=5, status=preferred)\n",
+    "chordpro_full": "{title: AI-ChordCraft Guitar Arrangement}\n{key: C major}\n{capo: 5}\n{tempo: 92}\n\n{start_of_chorus}\n[C] [G] [Am] [F]\n[C] [G] [Am] [F]\n{end_of_chorus}\n",
+    "voicing_summary": [
+      {
+        "chord": "G",
+        "shape": "320003",
+        "frets": [
+          3,
+          2,
+          0,
+          0,
+          0,
+          3
+        ],
+        "barres": [],
+        "difficulty": 1,
+        "commonness": 5,
+        "status": "preferred",
+        "contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ]
+      },
+      {
+        "chord": "D",
+        "shape": "xx0232",
+        "frets": [
+          -1,
+          -1,
+          0,
+          2,
+          3,
+          2
+        ],
+        "barres": [],
+        "difficulty": 1,
+        "commonness": 5,
+        "status": "preferred",
+        "contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open",
+          "partial",
+          "small_voicing"
+        ]
+      },
+      {
+        "chord": "Em",
+        "shape": "022000",
+        "frets": [
+          0,
+          2,
+          2,
+          0,
+          0,
+          0
+        ],
+        "barres": [],
+        "difficulty": 1,
+        "commonness": 5,
+        "status": "preferred",
+        "contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ]
+      },
+      {
+        "chord": "C",
+        "shape": "x32010",
+        "frets": [
+          -1,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "barres": [],
+        "difficulty": 1,
+        "commonness": 5,
+        "status": "preferred",
+        "contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ]
+      },
+      {
+        "chord": "G",
+        "shape": "320003",
+        "frets": [
+          3,
+          2,
+          0,
+          0,
+          0,
+          3
+        ],
+        "barres": [],
+        "difficulty": 1,
+        "commonness": 5,
+        "status": "preferred",
+        "contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ]
+      },
+      {
+        "chord": "D",
+        "shape": "xx0232",
+        "frets": [
+          -1,
+          -1,
+          0,
+          2,
+          3,
+          2
+        ],
+        "barres": [],
+        "difficulty": 1,
+        "commonness": 5,
+        "status": "preferred",
+        "contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open",
+          "partial",
+          "small_voicing"
+        ]
+      },
+      {
+        "chord": "Em",
+        "shape": "022000",
+        "frets": [
+          0,
+          2,
+          2,
+          0,
+          0,
+          0
+        ],
+        "barres": [],
+        "difficulty": 1,
+        "commonness": 5,
+        "status": "preferred",
+        "contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ]
+      },
+      {
+        "chord": "C",
+        "shape": "x32010",
+        "frets": [
+          -1,
+          3,
+          2,
+          0,
+          1,
+          0
+        ],
+        "barres": [],
+        "difficulty": 1,
+        "commonness": 5,
+        "status": "preferred",
+        "contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ]
+      }
+    ],
+    "files": {
+      "result_json": "../examples/01-pop-chorus-beginner/arrangement.json",
+      "lead_sheet_json": "../examples/01-pop-chorus-beginner/lead_sheet.json",
+      "practice_text": "../examples/01-pop-chorus-beginner/practice_sheet.txt",
+      "chordpro": "../examples/01-pop-chorus-beginner/arrangement.cho",
+      "voicing_summary": "../examples/01-pop-chorus-beginner/voicing_summary.json"
+    }
+  },
+  "validation": {
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  "composition": {
+    "request": "写一段温暖的 C 大调流行副歌，适合初学者吉他弹唱，不要横按",
+    "source": "template",
+    "template": "pop_chorus_major",
+    "planned_chords": [
+      "C",
+      "G",
+      "Am",
+      "F",
+      "C",
+      "G",
+      "Am",
+      "F"
+    ],
+    "arranger_chords": [
+      "C",
+      "G",
+      "Am",
+      "F",
+      "C",
+      "G",
+      "Am",
+      "F"
+    ],
+    "music_context": {
+      "key": "C major",
+      "style": "pop",
+      "section": "chorus",
+      "bar_count": 8,
+      "color_level": "light",
+      "capo_policy": "auto"
+    }
+  }
+}

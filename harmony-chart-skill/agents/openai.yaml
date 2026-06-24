@@ -1,6 +1,0 @@
-interface:
-  display_name: "Harmony Chart"
-  short_description: "Roman numerals and measure-grid harmony charts"
-  default_prompt: "Use $harmony-chart-skill to analyze this chord progression and render a compact measure chart."
-policy:
-  allow_implicit_invocation: true

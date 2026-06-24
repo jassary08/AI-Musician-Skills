@@ -1,0 +1,20 @@
+AI-ChordCraft Guitar Lead Sheet
+Key: C major    Style: pop    Capo: 5
+
+Progression:
+| C | G | Am | F |
+| C | G | Am | F |
+
+Degrees:
+| I | V | vi | IV |
+| I | V | vi | IV |
+
+Voicings:
+- G: 320003 (commonness=5, status=preferred)
+- D: xx0232 (commonness=5, status=preferred)
+- Em: 022000 (commonness=5, status=preferred)
+- C: x32010 (commonness=5, status=preferred)
+- G: 320003 (commonness=5, status=preferred)
+- D: xx0232 (commonness=5, status=preferred)
+- Em: 022000 (commonness=5, status=preferred)
+- C: x32010 (commonness=5, status=preferred)

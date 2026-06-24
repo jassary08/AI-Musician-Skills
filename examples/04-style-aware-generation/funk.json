@@ -1,0 +1,1255 @@
+{
+  "title": "AI-ChordCraft Guitar Arrangement",
+  "key": "C major",
+  "bpm": 92,
+  "time_signature": "4/4",
+  "section": "verse",
+  "style": "funk",
+  "user_level": "intermediate",
+  "capo": 3,
+  "play_as_key": "A major",
+  "display_chords": [
+    "A7",
+    "D7",
+    "A7",
+    "E7",
+    "A7",
+    "D7",
+    "A7",
+    "E7"
+  ],
+  "voicings": [
+    {
+      "chord": "A7",
+      "voicing_symbol": "A7",
+      "shape": "x02020",
+      "frets": [
+        -1,
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "fingers": [
+        0,
+        0,
+        2,
+        0,
+        3,
+        0
+      ],
+      "position": 1,
+      "barres": [],
+      "difficulty": 1,
+      "tags": [
+        "external",
+        "open"
+      ],
+      "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+      "commonness": 5,
+      "annotation_status": "preferred",
+      "annotation_contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open"
+      ],
+      "coloration": null,
+      "coloration_reason": ""
+    },
+    {
+      "chord": "D7",
+      "voicing_symbol": "D7",
+      "shape": "xx0212",
+      "frets": [
+        -1,
+        -1,
+        0,
+        2,
+        1,
+        2
+      ],
+      "fingers": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        3
+      ],
+      "position": 1,
+      "barres": [],
+      "difficulty": 1,
+      "tags": [
+        "external",
+        "open"
+      ],
+      "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+      "commonness": 5,
+      "annotation_status": "preferred",
+      "annotation_contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open",
+        "partial",
+        "small_voicing"
+      ],
+      "coloration": null,
+      "coloration_reason": ""
+    },
+    {
+      "chord": "A7",
+      "voicing_symbol": "A7",
+      "shape": "x02020",
+      "frets": [
+        -1,
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "fingers": [
+        0,
+        0,
+        2,
+        0,
+        3,
+        0
+      ],
+      "position": 1,
+      "barres": [],
+      "difficulty": 1,
+      "tags": [
+        "external",
+        "open"
+      ],
+      "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+      "commonness": 5,
+      "annotation_status": "preferred",
+      "annotation_contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open"
+      ],
+      "coloration": null,
+      "coloration_reason": ""
+    },
+    {
+      "chord": "E7",
+      "voicing_symbol": "E7",
+      "shape": "020100",
+      "frets": [
+        0,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "fingers": [
+        0,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "position": 1,
+      "barres": [],
+      "difficulty": 1,
+      "tags": [
+        "external",
+        "open"
+      ],
+      "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+      "commonness": 5,
+      "annotation_status": "preferred",
+      "annotation_contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open"
+      ],
+      "coloration": null,
+      "coloration_reason": ""
+    },
+    {
+      "chord": "A7",
+      "voicing_symbol": "A7",
+      "shape": "x02020",
+      "frets": [
+        -1,
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "fingers": [
+        0,
+        0,
+        2,
+        0,
+        3,
+        0
+      ],
+      "position": 1,
+      "barres": [],
+      "difficulty": 1,
+      "tags": [
+        "external",
+        "open"
+      ],
+      "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+      "commonness": 5,
+      "annotation_status": "preferred",
+      "annotation_contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open"
+      ],
+      "coloration": null,
+      "coloration_reason": ""
+    },
+    {
+      "chord": "D7",
+      "voicing_symbol": "D7",
+      "shape": "xx0212",
+      "frets": [
+        -1,
+        -1,
+        0,
+        2,
+        1,
+        2
+      ],
+      "fingers": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        3
+      ],
+      "position": 1,
+      "barres": [],
+      "difficulty": 1,
+      "tags": [
+        "external",
+        "open"
+      ],
+      "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+      "commonness": 5,
+      "annotation_status": "preferred",
+      "annotation_contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open",
+        "partial",
+        "small_voicing"
+      ],
+      "coloration": null,
+      "coloration_reason": ""
+    },
+    {
+      "chord": "A7",
+      "voicing_symbol": "A7",
+      "shape": "x02020",
+      "frets": [
+        -1,
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "fingers": [
+        0,
+        0,
+        2,
+        0,
+        3,
+        0
+      ],
+      "position": 1,
+      "barres": [],
+      "difficulty": 1,
+      "tags": [
+        "external",
+        "open"
+      ],
+      "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+      "commonness": 5,
+      "annotation_status": "preferred",
+      "annotation_contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open"
+      ],
+      "coloration": null,
+      "coloration_reason": ""
+    },
+    {
+      "chord": "E7",
+      "voicing_symbol": "E7",
+      "shape": "020100",
+      "frets": [
+        0,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "fingers": [
+        0,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "position": 1,
+      "barres": [],
+      "difficulty": 1,
+      "tags": [
+        "external",
+        "open"
+      ],
+      "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+      "commonness": 5,
+      "annotation_status": "preferred",
+      "annotation_contexts": [
+        "beginner",
+        "campfire",
+        "compact",
+        "low_position",
+        "open"
+      ],
+      "coloration": null,
+      "coloration_reason": ""
+    }
+  ],
+  "style_guidance": {
+    "harmony": {
+      "core_principles": [
+        "Funk 和声通常不靠频繁换和弦，而靠一个短 voicing 的反复、切分和音色位置。",
+        "dominant9、minor7、7sus、partial chord 是吉他常用核心。",
+        "很多时候一个和弦持续很久，关键在 voicing 选择和留白。",
+        "和弦应短、干、清楚，避免长时间六弦铺底。"
+      ],
+      "chord_vocabulary": {
+        "default": [
+          "dominant9",
+          "dominant7",
+          "minor7",
+          "7sus",
+          "partial_chord"
+        ],
+        "color": [
+          "13",
+          "minor9",
+          "slash",
+          "chromatic_stab"
+        ],
+        "cadence_tension": [
+          "static_dominant_vamp",
+          "i7-IV7",
+          "chromatic_approach_stabs"
+        ],
+        "avoid_by_default": [
+          "long_sustain_full_strums",
+          "heavy_distortion",
+          "wide_open_arpeggio"
+        ]
+      },
+      "common_moves": [
+        "单个 9 和弦 vamp 可以构成完整段落，变化来自节奏位置和装饰。",
+        "i7 到 IV7/IV9 是常见 funk/blues-funk 运动。",
+        "dominant9 可以用小型四弦 voicing 表达，根音可省略。",
+        "半音上下 approach chord 适合做短促 stab。",
+        "m7 到 7sus 或 9 的小范围移动比大和弦跳跃更有效。"
+      ],
+      "section_recipes": {
+        "intro": [
+          "用一个短促高辨识度 voicing 建立 vamp。"
+        ],
+        "verse": [
+          "保持少量和弦，重点是小型 voicing 和空间。"
+        ],
+        "pre_chorus": [
+          "可以通过半音 approach 或换到 IV9 增加变化。"
+        ],
+        "chorus": [
+          "用更明亮的 partial chord 或重复 hook voicing。"
+        ],
+        "bridge": [
+          "减少和弦数量，用单音 answer 或 chromatic stabs 做对比。"
+        ]
+      },
+      "reharmonization_moves": [
+        "普通 dominant7 优先升级成 dominant9 或 13。",
+        "普通 minor 可升级成 m7，但不要弹太满。",
+        "持续一个和弦时，准备两个相近 partial voicing 做 call-response。",
+        "使用半音 approach chord 时要短促，不要长时间停留。"
+      ],
+      "arrangement_hints": [
+        "Funk 编配优先小型 dominant9/m7/7sus voicing，而不是完整六弦大和弦。",
+        "和弦数量可以少，但每个 voicing 要短、干、位置清楚。",
+        "半音 approach 和 partial chord 比复杂进行更常用。",
+        "允许更多中高把位移动，但要保持手型小。"
+      ],
+      "llm_usage": {
+        "prefer": [
+          "dominant9",
+          "minor7",
+          "7sus",
+          "partial voicing",
+          "chromatic approach stabs"
+        ],
+        "use_with_care": [
+          "13th",
+          "slash",
+          "minor9"
+        ],
+        "do_not": [
+          "不要长时间六弦全扫",
+          "不要用厚失真堆满和弦"
+        ]
+      }
+    },
+    "guitar_arrangement": {
+      "core_goal": "用短促、干净的小型和弦与 dominant9/m7 色彩建立放克吉他和声质感。",
+      "chord_language": {
+        "prefer": [
+          "dominant9",
+          "dominant7",
+          "minor7",
+          "slash",
+          "partial_chord"
+        ],
+        "use_with_care": [
+          "major7",
+          "minor9",
+          "thirteenth"
+        ],
+        "avoid_by_default": [
+          "long_sustain_full_strums",
+          "heavy_distortion",
+          "wide_arpeggio_without_chord_clarity"
+        ]
+      },
+      "voicing_strategy": [
+        "优先两到四根弦的小型局部和弦，不要每拍扫满六根弦。",
+        "dominant9、m7、7sus、partial chord 很适合做短促 chord stab。",
+        "多个吉他声部时可拆成一个 chord stab 声部和一个单音 answer 声部。",
+        "如果只有一把吉他，优先保证发声位置短、干、准。"
+      ],
+      "section_usage": {
+        "verse": [
+          "partial chord stabs"
+        ],
+        "pre_chorus": [],
+        "chorus": [
+          "更明确的 syncopated hook"
+        ],
+        "bridge": [
+          "single-note rhythmic motif"
+        ]
+      },
+      "llm_prompt_hint": "放克吉他优先选择 dominant9、m7、7sus 等小型和弦；不要长音大扫，也不要让 voicing 过宽。",
+      "progression_templates": [
+        "static_9_vamp",
+        "i7-IV9",
+        "I9-bVII9",
+        "minor7_to_dominant9"
+      ],
+      "voicing_families": [
+        "top_four_string_9th",
+        "partial_barre",
+        "two_or_three_note_stabs",
+        "rootless_dominant9"
+      ],
+      "capo_strategy": [
+        "funk 通常优先选择把位和小型 voicing，不优先依赖 capo。"
+      ],
+      "voice_leading_focus": [
+        "小范围把位移动",
+        "短促 partial chord",
+        "半音 approach",
+        "避免开放弦拖尾"
+      ]
+    }
+  },
+  "practice_notes": [
+    "Capo 3 后可以把 C7 - F7 - C7 - G7 - C7 - F7 - C7 - G7 转成 A7 - D7 - A7 - E7 - A7 - D7 - A7 - E7，提高弹唱手感。",
+    "中级版本可以关注高音保持和相邻和弦的共同手指，减少换把痕迹。",
+    "Funk 编配优先小型 dominant9/m7/7sus voicing，而不是完整六弦大和弦。",
+    "编配目标：写一段 C 大调 funk verse，中级吉他手"
+  ],
+  "exports": {
+    "chord_diagrams": [
+      {
+        "chord": "A7",
+        "voicing_symbol": "A7",
+        "shape": "x02020",
+        "frets": [
+          -1,
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        "fingers": [
+          0,
+          0,
+          2,
+          0,
+          3,
+          0
+        ],
+        "position": 1,
+        "barres": [],
+        "difficulty": 1,
+        "tags": [
+          "external",
+          "open"
+        ],
+        "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+        "commonness": 5,
+        "annotation_status": "preferred",
+        "annotation_contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ],
+        "coloration": null,
+        "coloration_reason": ""
+      },
+      {
+        "chord": "D7",
+        "voicing_symbol": "D7",
+        "shape": "xx0212",
+        "frets": [
+          -1,
+          -1,
+          0,
+          2,
+          1,
+          2
+        ],
+        "fingers": [
+          0,
+          0,
+          0,
+          2,
+          1,
+          3
+        ],
+        "position": 1,
+        "barres": [],
+        "difficulty": 1,
+        "tags": [
+          "external",
+          "open"
+        ],
+        "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+        "commonness": 5,
+        "annotation_status": "preferred",
+        "annotation_contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open",
+          "partial",
+          "small_voicing"
+        ],
+        "coloration": null,
+        "coloration_reason": ""
+      },
+      {
+        "chord": "A7",
+        "voicing_symbol": "A7",
+        "shape": "x02020",
+        "frets": [
+          -1,
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        "fingers": [
+          0,
+          0,
+          2,
+          0,
+          3,
+          0
+        ],
+        "position": 1,
+        "barres": [],
+        "difficulty": 1,
+        "tags": [
+          "external",
+          "open"
+        ],
+        "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+        "commonness": 5,
+        "annotation_status": "preferred",
+        "annotation_contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ],
+        "coloration": null,
+        "coloration_reason": ""
+      },
+      {
+        "chord": "E7",
+        "voicing_symbol": "E7",
+        "shape": "020100",
+        "frets": [
+          0,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        "fingers": [
+          0,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        "position": 1,
+        "barres": [],
+        "difficulty": 1,
+        "tags": [
+          "external",
+          "open"
+        ],
+        "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+        "commonness": 5,
+        "annotation_status": "preferred",
+        "annotation_contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ],
+        "coloration": null,
+        "coloration_reason": ""
+      },
+      {
+        "chord": "A7",
+        "voicing_symbol": "A7",
+        "shape": "x02020",
+        "frets": [
+          -1,
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        "fingers": [
+          0,
+          0,
+          2,
+          0,
+          3,
+          0
+        ],
+        "position": 1,
+        "barres": [],
+        "difficulty": 1,
+        "tags": [
+          "external",
+          "open"
+        ],
+        "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+        "commonness": 5,
+        "annotation_status": "preferred",
+        "annotation_contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ],
+        "coloration": null,
+        "coloration_reason": ""
+      },
+      {
+        "chord": "D7",
+        "voicing_symbol": "D7",
+        "shape": "xx0212",
+        "frets": [
+          -1,
+          -1,
+          0,
+          2,
+          1,
+          2
+        ],
+        "fingers": [
+          0,
+          0,
+          0,
+          2,
+          1,
+          3
+        ],
+        "position": 1,
+        "barres": [],
+        "difficulty": 1,
+        "tags": [
+          "external",
+          "open"
+        ],
+        "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+        "commonness": 5,
+        "annotation_status": "preferred",
+        "annotation_contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open",
+          "partial",
+          "small_voicing"
+        ],
+        "coloration": null,
+        "coloration_reason": ""
+      },
+      {
+        "chord": "A7",
+        "voicing_symbol": "A7",
+        "shape": "x02020",
+        "frets": [
+          -1,
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        "fingers": [
+          0,
+          0,
+          2,
+          0,
+          3,
+          0
+        ],
+        "position": 1,
+        "barres": [],
+        "difficulty": 1,
+        "tags": [
+          "external",
+          "open"
+        ],
+        "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+        "commonness": 5,
+        "annotation_status": "preferred",
+        "annotation_contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ],
+        "coloration": null,
+        "coloration_reason": ""
+      },
+      {
+        "chord": "E7",
+        "voicing_symbol": "E7",
+        "shape": "020100",
+        "frets": [
+          0,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        "fingers": [
+          0,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        "position": 1,
+        "barres": [],
+        "difficulty": 1,
+        "tags": [
+          "external",
+          "open"
+        ],
+        "reason": "Imported from open-source guitar chord database; needs musical review before being treated as approved.",
+        "commonness": 5,
+        "annotation_status": "preferred",
+        "annotation_contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ],
+        "coloration": null,
+        "coloration_reason": ""
+      }
+    ],
+    "chord_diagrams_png": null,
+    "chordpro": "{title: AI-ChordCraft Guitar Arrangement}\n{key: C major}\n{capo: 3}\n{tempo: 92}\n\n{start_of_verse}\n[A7] [D7] [A7] [E7] [A7] [D7] [A7] [E7]\n{end_of_verse}\n",
+    "progression_grid": {
+      "columns": 4,
+      "rows": [
+        [
+          {
+            "bar": 1,
+            "section": "section",
+            "chord": "C7",
+            "degree": "I7"
+          },
+          {
+            "bar": 2,
+            "section": "section",
+            "chord": "F7",
+            "degree": "IV7"
+          },
+          {
+            "bar": 3,
+            "section": "section",
+            "chord": "C7",
+            "degree": "I7"
+          },
+          {
+            "bar": 4,
+            "section": "section",
+            "chord": "G7",
+            "degree": "V7"
+          }
+        ],
+        [
+          {
+            "bar": 5,
+            "section": "section",
+            "chord": "C7",
+            "degree": "I7"
+          },
+          {
+            "bar": 6,
+            "section": "section",
+            "chord": "F7",
+            "degree": "IV7"
+          },
+          {
+            "bar": 7,
+            "section": "section",
+            "chord": "C7",
+            "degree": "I7"
+          },
+          {
+            "bar": 8,
+            "section": "section",
+            "chord": "G7",
+            "degree": "V7"
+          }
+        ]
+      ],
+      "text": "| C7 | F7 | C7 | G7 |\n| C7 | F7 | C7 | G7 |",
+      "degrees_text": "| I7 | IV7 | I7 | V7 |\n| I7 | IV7 | I7 | V7 |"
+    },
+    "lead_sheet": {
+      "title": "AI-ChordCraft Guitar Arrangement",
+      "key": "C major",
+      "style": "funk",
+      "section": "verse",
+      "bar_count": 8,
+      "capo": 3,
+      "play_as_key": "A major",
+      "bars": [
+        {
+          "bar": 1,
+          "section": "verse",
+          "chord": "C7",
+          "degree": "I7"
+        },
+        {
+          "bar": 2,
+          "section": "verse",
+          "chord": "F7",
+          "degree": "IV7"
+        },
+        {
+          "bar": 3,
+          "section": "verse",
+          "chord": "C7",
+          "degree": "I7"
+        },
+        {
+          "bar": 4,
+          "section": "verse",
+          "chord": "G7",
+          "degree": "V7"
+        },
+        {
+          "bar": 5,
+          "section": "verse",
+          "chord": "C7",
+          "degree": "I7"
+        },
+        {
+          "bar": 6,
+          "section": "verse",
+          "chord": "F7",
+          "degree": "IV7"
+        },
+        {
+          "bar": 7,
+          "section": "verse",
+          "chord": "C7",
+          "degree": "I7"
+        },
+        {
+          "bar": 8,
+          "section": "verse",
+          "chord": "G7",
+          "degree": "V7"
+        }
+      ],
+      "unique_voicings": [
+        {
+          "chord": "A7",
+          "shape": "x02020",
+          "frets": [
+            -1,
+            0,
+            2,
+            0,
+            2,
+            0
+          ],
+          "barres": [],
+          "difficulty": 1,
+          "commonness": 5,
+          "status": "preferred",
+          "contexts": [
+            "beginner",
+            "campfire",
+            "compact",
+            "low_position",
+            "open"
+          ]
+        },
+        {
+          "chord": "D7",
+          "shape": "xx0212",
+          "frets": [
+            -1,
+            -1,
+            0,
+            2,
+            1,
+            2
+          ],
+          "barres": [],
+          "difficulty": 1,
+          "commonness": 5,
+          "status": "preferred",
+          "contexts": [
+            "beginner",
+            "campfire",
+            "compact",
+            "low_position",
+            "open",
+            "partial",
+            "small_voicing"
+          ]
+        },
+        {
+          "chord": "E7",
+          "shape": "020100",
+          "frets": [
+            0,
+            2,
+            0,
+            1,
+            0,
+            0
+          ],
+          "barres": [],
+          "difficulty": 1,
+          "commonness": 5,
+          "status": "preferred",
+          "contexts": [
+            "beginner",
+            "campfire",
+            "compact",
+            "low_position",
+            "open"
+          ]
+        }
+      ]
+    },
+    "practice_text": "AI-ChordCraft Guitar Lead Sheet\nKey: C major    Style: funk    Capo: 3\n\nProgression:\n| C7 | F7 | C7 | G7 |\n| C7 | F7 | C7 | G7 |\n\nDegrees:\n| I7 | IV7 | I7 | V7 |\n| I7 | IV7 | I7 | V7 |\n\nVoicings:\n- A7: x02020 (commonness=5, status=preferred)\n- D7: xx0212 (commonness=5, status=preferred)\n- A7: x02020 (commonness=5, status=preferred)\n- E7: 020100 (commonness=5, status=preferred)\n- A7: x02020 (commonness=5, status=preferred)\n- D7: xx0212 (commonness=5, status=preferred)\n- A7: x02020 (commonness=5, status=preferred)\n- E7: 020100 (commonness=5, status=preferred)\n",
+    "chordpro_full": "{title: AI-ChordCraft Guitar Arrangement}\n{key: C major}\n{capo: 3}\n{tempo: 92}\n\n{start_of_verse}\n[C7] [F7] [C7] [G7]\n[C7] [F7] [C7] [G7]\n{end_of_verse}\n",
+    "voicing_summary": [
+      {
+        "chord": "A7",
+        "shape": "x02020",
+        "frets": [
+          -1,
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        "barres": [],
+        "difficulty": 1,
+        "commonness": 5,
+        "status": "preferred",
+        "contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ]
+      },
+      {
+        "chord": "D7",
+        "shape": "xx0212",
+        "frets": [
+          -1,
+          -1,
+          0,
+          2,
+          1,
+          2
+        ],
+        "barres": [],
+        "difficulty": 1,
+        "commonness": 5,
+        "status": "preferred",
+        "contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open",
+          "partial",
+          "small_voicing"
+        ]
+      },
+      {
+        "chord": "A7",
+        "shape": "x02020",
+        "frets": [
+          -1,
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        "barres": [],
+        "difficulty": 1,
+        "commonness": 5,
+        "status": "preferred",
+        "contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ]
+      },
+      {
+        "chord": "E7",
+        "shape": "020100",
+        "frets": [
+          0,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        "barres": [],
+        "difficulty": 1,
+        "commonness": 5,
+        "status": "preferred",
+        "contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ]
+      },
+      {
+        "chord": "A7",
+        "shape": "x02020",
+        "frets": [
+          -1,
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        "barres": [],
+        "difficulty": 1,
+        "commonness": 5,
+        "status": "preferred",
+        "contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ]
+      },
+      {
+        "chord": "D7",
+        "shape": "xx0212",
+        "frets": [
+          -1,
+          -1,
+          0,
+          2,
+          1,
+          2
+        ],
+        "barres": [],
+        "difficulty": 1,
+        "commonness": 5,
+        "status": "preferred",
+        "contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open",
+          "partial",
+          "small_voicing"
+        ]
+      },
+      {
+        "chord": "A7",
+        "shape": "x02020",
+        "frets": [
+          -1,
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        "barres": [],
+        "difficulty": 1,
+        "commonness": 5,
+        "status": "preferred",
+        "contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ]
+      },
+      {
+        "chord": "E7",
+        "shape": "020100",
+        "frets": [
+          0,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        "barres": [],
+        "difficulty": 1,
+        "commonness": 5,
+        "status": "preferred",
+        "contexts": [
+          "beginner",
+          "campfire",
+          "compact",
+          "low_position",
+          "open"
+        ]
+      }
+    ]
+  },
+  "validation": {
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  "composition": {
+    "request": "写一段 C 大调 funk verse，中级吉他手",
+    "source": "template",
+    "template": "funk_verse_major",
+    "planned_chords": [
+      "C7",
+      "F7",
+      "C7",
+      "G7",
+      "C7",
+      "F7",
+      "C7",
+      "G7"
+    ],
+    "arranger_chords": [
+      "C7",
+      "F7",
+      "C7",
+      "G7",
+      "C7",
+      "F7",
+      "C7",
+      "G7"
+    ],
+    "music_context": {
+      "key": "C major",
+      "style": "funk",
+      "section": "verse",
+      "bar_count": 8,
+      "color_level": "colorful",
+      "capo_policy": "auto"
+    }
+  }
+}

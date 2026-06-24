@@ -18,12 +18,16 @@ from typing import Any
 
 BG = (244, 248, 255)
 CARD = (255, 255, 255)
+CARD_HEAD = (231, 240, 255)
 BORDER = (190, 208, 236)
 INK = (21, 32, 51)
 MUTED = (102, 119, 143)
 GRID = (64, 82, 111)
+NUT = (28, 40, 64)
 BLUE = (30, 96, 220)
 BLUE_DARK = (16, 62, 148)
+ACCENT = (236, 242, 252)
+SHADOW = (214, 224, 242)
 WHITE = (255, 255, 255)
 
 
@@ -195,30 +199,65 @@ def render_capo(payload: Any) -> Any:
 
 
 class Canvas:
-    def __init__(self, width: int, height: int, bg: tuple[int, int, int] = BG) -> None:
-        self.width = width
-        self.height = height
-        self.pixels = bytearray(width * height * 3)
-        self.fill_rect(0, 0, width, height, bg)
+    """Logical-coordinate canvas rendered at an internal supersample factor.
 
-    def set_pixel(self, x: int, y: int, color: tuple[int, int, int]) -> None:
+    All public drawing methods take logical pixels. The canvas keeps an
+    internal buffer scaled by ``ss`` and box-downsamples on save, which gives
+    cheap anti-aliasing for circles, diagonal lines, and barre bars without any
+    third-party imaging dependency.
+    """
+
+    def __init__(
+        self,
+        width: int,
+        height: int,
+        bg: tuple[int, int, int] = BG,
+        ss: int = 2,
+    ) -> None:
+        self.ss = max(1, int(ss))
+        self.lw = width
+        self.lh = height
+        self.width = width * self.ss
+        self.height = height * self.ss
+        self.pixels = bytearray(self.width * self.height * 3)
+        self._fill_phys(0, 0, self.width, self.height, bg)
+
+    # --- physical-space primitives (already scaled) ---
+
+    def _set_phys(self, x: int, y: int, color: tuple[int, int, int]) -> None:
         if 0 <= x < self.width and 0 <= y < self.height:
             offset = (y * self.width + x) * 3
             self.pixels[offset : offset + 3] = bytes(color)
 
-    def fill_rect(self, x: int, y: int, w: int, h: int, color: tuple[int, int, int]) -> None:
+    def _fill_phys(self, x: int, y: int, w: int, h: int, color: tuple[int, int, int]) -> None:
+        x0 = max(0, x)
+        x1 = min(self.width, x + w)
+        if x1 <= x0:
+            return
+        run = bytes(color) * (x1 - x0)
         for yy in range(max(0, y), min(self.height, y + h)):
-            start = (yy * self.width + max(0, x)) * 3
-            end = (yy * self.width + min(self.width, x + w)) * 3
-            self.pixels[start:end] = bytes(color) * max(0, min(self.width, x + w) - max(0, x))
+            start = (yy * self.width + x0) * 3
+            self.pixels[start : start + len(run)] = run
 
-    def rect(self, x: int, y: int, w: int, h: int, color: tuple[int, int, int], thickness: int = 1) -> None:
-        self.fill_rect(x, y, w, thickness, color)
-        self.fill_rect(x, y + h - thickness, w, thickness, color)
-        self.fill_rect(x, y, thickness, h, color)
-        self.fill_rect(x + w - thickness, y, thickness, h, color)
+    def _circle_phys(self, cx: int, cy: int, r: int, color: tuple[int, int, int]) -> None:
+        rr = r * r
+        for y in range(cy - r, cy + r + 1):
+            dy2 = (y - cy) * (y - cy)
+            for x in range(cx - r, cx + r + 1):
+                if (x - cx) * (x - cx) + dy2 <= rr:
+                    self._set_phys(x, y, color)
 
-    def line(self, x1: int, y1: int, x2: int, y2: int, color: tuple[int, int, int], thickness: int = 1) -> None:
+    def _ring_phys(self, cx: int, cy: int, r: int, thickness: int, color: tuple[int, int, int]) -> None:
+        outer = r * r
+        inner = max(0, r - thickness) ** 2
+        for y in range(cy - r, cy + r + 1):
+            dy2 = (y - cy) * (y - cy)
+            for x in range(cx - r, cx + r + 1):
+                dist = (x - cx) * (x - cx) + dy2
+                if inner <= dist <= outer:
+                    self._set_phys(x, y, color)
+
+    def _line_phys(self, x1: int, y1: int, x2: int, y2: int, color: tuple[int, int, int], thickness: int) -> None:
         dx = abs(x2 - x1)
         dy = -abs(y2 - y1)
         sx = 1 if x1 < x2 else -1
@@ -226,7 +265,7 @@ class Canvas:
         err = dx + dy
         radius = max(0, thickness // 2)
         while True:
-            self.fill_rect(x1 - radius, y1 - radius, thickness, thickness, color)
+            self._fill_phys(x1 - radius, y1 - radius, thickness, thickness, color)
             if x1 == x2 and y1 == y2:
                 break
             e2 = 2 * err
@@ -237,22 +276,61 @@ class Canvas:
                 err += dx
                 y1 += sy
 
+    # --- logical-space public API (scaled by ss) ---
+
+    def fill_rect(self, x: int, y: int, w: int, h: int, color: tuple[int, int, int]) -> None:
+        s = self.ss
+        self._fill_phys(x * s, y * s, w * s, h * s, color)
+
+    def rect(self, x: int, y: int, w: int, h: int, color: tuple[int, int, int], thickness: int = 1) -> None:
+        self.fill_rect(x, y, w, thickness, color)
+        self.fill_rect(x, y + h - thickness, w, thickness, color)
+        self.fill_rect(x, y, thickness, h, color)
+        self.fill_rect(x + w - thickness, y, thickness, h, color)
+
+    def round_rect(self, x: int, y: int, w: int, h: int, radius: int, color: tuple[int, int, int]) -> None:
+        """Filled rectangle with rounded corners (used for header chips/cards)."""
+        s = self.ss
+        r = max(0, radius) * s
+        px, py, pw, ph = x * s, y * s, w * s, h * s
+        self._fill_phys(px + r, py, pw - 2 * r, ph, color)
+        self._fill_phys(px, py + r, pw, ph - 2 * r, color)
+        for cx, cy in (
+            (px + r, py + r),
+            (px + pw - r - 1, py + r),
+            (px + r, py + ph - r - 1),
+            (px + pw - r - 1, py + ph - r - 1),
+        ):
+            self._circle_phys(cx, cy, r, color)
+
+    def line(self, x1: int, y1: int, x2: int, y2: int, color: tuple[int, int, int], thickness: int = 1) -> None:
+        s = self.ss
+        self._line_phys(x1 * s, y1 * s, x2 * s, y2 * s, color, max(1, thickness * s))
+
     def circle(self, cx: int, cy: int, r: int, color: tuple[int, int, int]) -> None:
-        rr = r * r
-        for y in range(cy - r, cy + r + 1):
-            for x in range(cx - r, cx + r + 1):
-                if (x - cx) * (x - cx) + (y - cy) * (y - cy) <= rr:
-                    self.set_pixel(x, y, color)
+        s = self.ss
+        self._circle_phys(cx * s, cy * s, r * s, color)
+
+    def ring(self, cx: int, cy: int, r: int, color: tuple[int, int, int], thickness: int = 2) -> None:
+        s = self.ss
+        self._ring_phys(cx * s, cy * s, r * s, max(1, thickness * s), color)
+
+    def cross(self, cx: int, cy: int, r: int, color: tuple[int, int, int], thickness: int = 2) -> None:
+        s = self.ss
+        self._line_phys((cx - r) * s, (cy - r) * s, (cx + r) * s, (cy + r) * s, color, max(1, thickness * s))
+        self._line_phys((cx - r) * s, (cy + r) * s, (cx + r) * s, (cy - r) * s, color, max(1, thickness * s))
 
     def draw_text(self, x: int, y: int, text: str, color: tuple[int, int, int] = INK, scale: int = 2) -> None:
-        cursor = x
+        s = self.ss
+        cursor = x * s
+        step = scale * s
         for ch in text:
             glyph = FONT.get(ch) or FONT.get(ch.upper()) or FONT[" "]
             for row, bits in enumerate(glyph):
                 for col, bit in enumerate(bits):
                     if bit == "1":
-                        self.fill_rect(cursor + col * scale, y + row * scale, scale, scale, color)
-            cursor += (len(glyph[0]) + 1) * scale
+                        self._fill_phys(cursor + col * step, y * s + row * step, step, step, color)
+            cursor += (len(glyph[0]) + 1) * step
 
     def text_width(self, text: str, scale: int = 2) -> int:
         width = 0
@@ -261,19 +339,46 @@ class Canvas:
             width += (len(glyph[0]) + 1) * scale
         return width
 
+    def _downsample(self) -> tuple[int, int, bytearray]:
+        if self.ss == 1:
+            return self.width, self.height, self.pixels
+        s = self.ss
+        out = bytearray(self.lw * self.lh * 3)
+        area = s * s
+        src = self.pixels
+        sw = self.width
+        for oy in range(self.lh):
+            for ox in range(self.lw):
+                r = g = b = 0
+                base_y = oy * s
+                base_x = ox * s
+                for dy in range(s):
+                    row = ((base_y + dy) * sw + base_x) * 3
+                    for _dx in range(s):
+                        r += src[row]
+                        g += src[row + 1]
+                        b += src[row + 2]
+                        row += 3
+                o = (oy * self.lw + ox) * 3
+                out[o] = r // area
+                out[o + 1] = g // area
+                out[o + 2] = b // area
+        return self.lw, self.lh, out
+
     def save_png(self, path: Path) -> None:
         def chunk(kind: bytes, data: bytes) -> bytes:
             return struct.pack(">I", len(data)) + kind + data + struct.pack(">I", zlib.crc32(kind + data) & 0xFFFFFFFF)
 
+        width, height, pixels = self._downsample()
         rows = bytearray()
-        stride = self.width * 3
-        for y in range(self.height):
+        stride = width * 3
+        for y in range(height):
             rows.append(0)
-            rows.extend(self.pixels[y * stride : (y + 1) * stride])
+            rows.extend(pixels[y * stride : (y + 1) * stride])
         payload = b"".join(
             [
                 b"\x89PNG\r\n\x1a\n",
-                chunk(b"IHDR", struct.pack(">IIBBBBB", self.width, self.height, 8, 2, 0, 0, 0)),
+                chunk(b"IHDR", struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)),
                 chunk(b"IDAT", zlib.compress(bytes(rows), 9)),
                 chunk(b"IEND", b""),
             ]
@@ -325,13 +430,16 @@ def collect_voicings(payload: Any, include_duplicates: bool = False) -> list[dic
 
 
 def draw_chord(canvas: Canvas, item: dict[str, Any], x: int, y: int, w: int, h: int) -> None:
-    canvas.fill_rect(x, y, w, h, CARD)
+    # soft drop shadow + card with a tinted title band
+    canvas.round_rect(x + 3, y + 4, w, h, 10, SHADOW)
+    canvas.round_rect(x, y, w, h, 10, CARD)
+    canvas.fill_rect(x + 2, y + 2, w - 4, 40, CARD_HEAD)
     canvas.rect(x, y, w, h, BORDER, 2)
 
     label = str(item.get("voicing_symbol") or item.get("symbol") or item.get("chord") or "Chord")
     label_scale = 3 if len(label) <= 5 else 2
     label_x = x + (w - canvas.text_width(label, label_scale)) // 2
-    canvas.draw_text(label_x, y + 18, label, INK, label_scale)
+    canvas.draw_text(label_x, y + 13, label, INK, label_scale)
 
     degree = str(item.get("degree") or "").strip()
     if degree:
@@ -356,20 +464,26 @@ def draw_chord(canvas: Canvas, item: dict[str, Any], x: int, y: int, w: int, h: 
     fret_gap = grid_h // 5
     xs = [grid_left + idx * string_gap for idx in range(6)]
 
+    # fretboard fill behind the grid for a touch of depth
+    canvas.fill_rect(grid_left, grid_top, grid_w, grid_h, ACCENT)
+
     for idx in range(6):
         canvas.line(xs[idx], grid_top, xs[idx], grid_top + grid_h, GRID, 2)
     for idx in range(6):
-        thickness = 5 if idx == 0 and base_fret == 1 else 2
-        canvas.line(grid_left, grid_top + idx * fret_gap, grid_left + grid_w, grid_top + idx * fret_gap, GRID, thickness)
+        is_nut = idx == 0 and base_fret == 1
+        thickness = 6 if is_nut else 2
+        color = NUT if is_nut else GRID
+        canvas.line(grid_left, grid_top + idx * fret_gap, grid_left + grid_w, grid_top + idx * fret_gap, color, thickness)
 
     if base_fret > 1:
         canvas.draw_text(x + 14, grid_top + 3, f"{base_fret}fr", MUTED, 2)
 
+    # open (ring) / muted (cross) markers above the nut, drawn as real glyphs
     for idx, fret in enumerate(frets):
-        marker = "X" if fret < 0 else ("O" if fret == 0 else "")
-        if marker:
-            tw = canvas.text_width(marker, 2)
-            canvas.draw_text(xs[idx] - tw // 2, grid_top - 28, marker, MUTED, 2)
+        if fret < 0:
+            canvas.cross(xs[idx], grid_top - 16, 7, MUTED, 2)
+        elif fret == 0:
+            canvas.ring(xs[idx], grid_top - 16, 7, MUTED, 2)
 
     for barre_fret in item.get("barres") or []:
         if not isinstance(barre_fret, int) or not (base_fret <= barre_fret < base_fret + 5):
@@ -378,14 +492,15 @@ def draw_chord(canvas: Canvas, item: dict[str, Any], x: int, y: int, w: int, h: 
         if len(string_indices) < 2:
             continue
         yy = grid_top + int((barre_fret - base_fret + 0.5) * fret_gap)
-        canvas.line(xs[min(string_indices)], yy, xs[max(string_indices)], yy, BLUE_DARK, 12)
+        canvas.line(xs[min(string_indices)], yy, xs[max(string_indices)], yy, BLUE_DARK, 13)
 
     for idx, fret in enumerate(frets):
         if fret <= 0 or not (base_fret <= fret < base_fret + 5):
             continue
         cx = xs[idx]
         cy = grid_top + int((fret - base_fret + 0.5) * fret_gap)
-        canvas.circle(cx, cy, 11, BLUE)
+        canvas.circle(cx, cy, 12, BLUE_DARK)
+        canvas.circle(cx, cy, 10, BLUE)
         finger = fingers[idx]
         if finger > 0:
             text = str(finger)
@@ -406,11 +521,103 @@ def add_degree_labels(voicings: list[dict[str, Any]], key: str) -> list[dict[str
     return result
 
 
+def header_fields(payload: Any) -> list[tuple[str, str]]:
+    """Collect the meta line shown at the top of a practice sheet."""
+    if not isinstance(payload, dict):
+        return []
+    capo = render_capo(payload)
+    key = render_key(payload)
+    pairs: list[tuple[str, str]] = []
+    if key:
+        pairs.append(("Key", key))
+    pairs.append(("Capo", str(capo if capo not in (None, "") else 0)))
+    for label, field in (("BPM", "bpm"), ("Time", "time_signature"), ("Style", "style")):
+        value = payload.get(field)
+        if value not in (None, ""):
+            pairs.append((label, str(value)))
+    return pairs
+
+
+def progression_bars(payload: Any) -> list[dict[str, str]]:
+    """Pull the ordered bar-by-bar progression for the sheet header strip."""
+    if not isinstance(payload, dict):
+        return []
+    exports = payload.get("exports") or {}
+    grid = exports.get("progression_grid") or {}
+    rows = grid.get("rows") if isinstance(grid, dict) else None
+    bars: list[dict[str, str]] = []
+    if isinstance(rows, list):
+        for row in rows:
+            if not isinstance(row, list):
+                continue
+            for bar in row:
+                if isinstance(bar, dict):
+                    bars.append(
+                        {
+                            "chord": str(bar.get("chord") or ""),
+                            "degree": str(bar.get("degree") or ""),
+                        }
+                    )
+    if bars:
+        return bars
+    lead = exports.get("lead_sheet") or {}
+    lead_bars = lead.get("bars") if isinstance(lead, dict) else None
+    if isinstance(lead_bars, list):
+        for bar in lead_bars:
+            if isinstance(bar, dict):
+                bars.append(
+                    {
+                        "chord": str(bar.get("chord") or ""),
+                        "degree": str(bar.get("degree") or ""),
+                    }
+                )
+    if bars:
+        return bars
+    display = payload.get("display_chords")
+    if isinstance(display, list):
+        bars = [{"chord": str(chord), "degree": ""} for chord in display]
+    return bars
+
+
+def draw_progression_strip(
+    canvas: Canvas, bars: list[dict[str, str]], x: int, y: int, width: int, columns: int = 4
+) -> int:
+    """Draw the ordered progression as numbered bar cells. Returns height used."""
+    if not bars:
+        return 0
+    columns = max(1, columns)
+    gap = 10
+    cell_w = (width - (columns - 1) * gap) // columns
+    cell_h = 56
+    rows = math.ceil(len(bars) / columns)
+    canvas.draw_text(x, y, "Progression", MUTED, 2)
+    top = y + 26
+    for idx, bar in enumerate(bars):
+        row = idx // columns
+        col = idx % columns
+        cx = x + col * (cell_w + gap)
+        cy = top + row * (cell_h + gap)
+        canvas.round_rect(cx, cy, cell_w, cell_h, 8, CARD)
+        canvas.rect(cx, cy, cell_w, cell_h, BORDER, 2)
+        canvas.fill_rect(cx + 2, cy + 2, 26, cell_h - 4, ACCENT)
+        canvas.draw_text(cx + 7, cy + cell_h // 2 - 7, str(idx + 1), MUTED, 2)
+        chord = bar.get("chord") or ""
+        chord_scale = 3 if len(chord) <= 4 else 2
+        chord_x = cx + 32 + (cell_w - 32 - canvas.text_width(chord, chord_scale)) // 2
+        canvas.draw_text(chord_x, cy + 10, chord, INK, chord_scale)
+        degree = bar.get("degree") or ""
+        if degree:
+            deg_x = cx + 32 + (cell_w - 32 - canvas.text_width(degree, 1)) // 2
+            canvas.draw_text(deg_x, cy + 38, degree, BLUE_DARK, 1)
+    return top - y + rows * cell_h + (rows - 1) * gap
+
+
 def render_chord_diagrams_png(
     payload: Any,
     output_path: Path,
     columns: int = 4,
     include_duplicates: bool = False,
+    layout: str = "sheet",
 ) -> Path:
     key = render_key(payload)
     capo = render_capo(payload)
@@ -422,20 +629,71 @@ def render_chord_diagrams_png(
     cell_h = 272
     gap = 18
     margin = 24
-    header_h = 64 if key or capo not in (None, 0, "0") else 0
-    rows = math.ceil(len(voicings) / columns)
-    width = margin * 2 + columns * cell_w + (columns - 1) * gap
-    height = margin * 2 + header_h + rows * cell_h + (rows - 1) * gap
+
+    fields = header_fields(payload) if layout == "sheet" else []
+    bars = progression_bars(payload) if layout == "sheet" else []
+
+    diagram_rows = math.ceil(len(voicings) / columns)
+    grid_w = columns * cell_w + (columns - 1) * gap
+    width = margin * 2 + grid_w
+
+    # measure header block height for the sheet layout
+    title = str(payload.get("title") or "").strip() if isinstance(payload, dict) else ""
+    head_h = 0
+    if layout == "sheet":
+        head_h += 34 if title else 0
+        head_h += 30 if fields else 0
+    elif key or capo not in (None, 0, "0"):
+        head_h = 64
+
+    # progression strip height (measured with a throwaway pass would be costly;
+    # compute geometry directly)
+    strip_h = 0
+    if bars:
+        strip_cols = max(1, min(8, columns * 2))
+        strip_gap = 10
+        strip_rows = math.ceil(len(bars) / strip_cols)
+        strip_h = 26 + strip_rows * 56 + (strip_rows - 1) * strip_gap + 18
+
+    diagrams_label_h = 24 if layout == "sheet" and bars else 0
+    top_block = head_h + (12 if head_h else 0) + strip_h + diagrams_label_h
+    height = margin * 2 + top_block + diagram_rows * cell_h + (diagram_rows - 1) * gap
+
     canvas = Canvas(width, height, BG)
-    if header_h:
-        header = f"Capo {capo} - {key}".strip()
-        header_x = margin
-        canvas.draw_text(header_x, margin + 4, header, INK, 3)
+    cursor_y = margin
+
+    if layout == "sheet":
+        if title:
+            canvas.draw_text(margin, cursor_y, title, INK, 3)
+            cursor_y += 34
+        if fields:
+            chip_x = margin
+            for label, value in fields:
+                text = f"{label} {value}"
+                chip_w = canvas.text_width(text, 2) + 20
+                canvas.round_rect(chip_x, cursor_y, chip_w, 24, 6, CARD_HEAD)
+                canvas.draw_text(chip_x + 10, cursor_y + 5, text, BLUE_DARK, 2)
+                chip_x += chip_w + 10
+            cursor_y += 30
+        if head_h:
+            cursor_y += 12
+        if bars:
+            strip_cols = max(1, min(8, columns * 2))
+            used = draw_progression_strip(canvas, bars, margin, cursor_y, grid_w, columns=strip_cols)
+            cursor_y += used + 18
+            canvas.draw_text(margin, cursor_y, "Chord shapes", MUTED, 2)
+            cursor_y += 24
+    else:
+        if head_h:
+            header = f"Capo {capo} - {key}".strip()
+            canvas.draw_text(margin, cursor_y + 4, header, INK, 3)
+            cursor_y += head_h
+
     for idx, item in enumerate(voicings):
         row = idx // columns
         col = idx % columns
         x = margin + col * (cell_w + gap)
-        y = margin + header_h + row * (cell_h + gap)
+        y = cursor_y + row * (cell_h + gap)
         draw_chord(canvas, item, x, y, cell_w, cell_h)
     canvas.save_png(output_path)
     return output_path
@@ -447,7 +705,22 @@ def main() -> None:
     parser.add_argument("--input-file", help="Path to JSON containing voicings or an arrange_guitar result.")
     parser.add_argument("--output", required=True, help="PNG output path.")
     parser.add_argument("--columns", type=int, default=4, help="Number of diagram columns.")
-    parser.add_argument("--include-duplicates", action="store_true", help="Render repeated chord/shape pairs.")
+    parser.add_argument(
+        "--layout",
+        choices=["sheet", "grid"],
+        default="sheet",
+        help="sheet: header + ordered progression + deduped shapes (default). grid: plain diagram grid.",
+    )
+    parser.add_argument(
+        "--show-all",
+        action="store_true",
+        help="Render every voicing in progression order instead of unique shapes only.",
+    )
+    parser.add_argument(
+        "--include-duplicates",
+        action="store_true",
+        help="Alias of --show-all (kept for backward compatibility).",
+    )
     args = parser.parse_args()
 
     if not args.input_json and not args.input_file:
@@ -457,7 +730,8 @@ def main() -> None:
         payload,
         Path(args.output),
         columns=args.columns,
-        include_duplicates=args.include_duplicates,
+        include_duplicates=args.show_all or args.include_duplicates,
+        layout=args.layout,
     )
     print(json.dumps({"output": str(output), "ok": True}, ensure_ascii=False))
 

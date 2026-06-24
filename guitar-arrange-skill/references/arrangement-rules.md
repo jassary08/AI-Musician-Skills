@@ -48,52 +48,7 @@ The arranger treats the source database as immutable imported data, then applies
 3. Score local playability, style fit, and overlay commonness.
 4. Run adjacent-chord voice-leading path search.
 
-`resources/voicing_db/indexes/voicing_layers.json` is an algorithmic index built from the source database. It does not replace the source database or overlay; it groups voicings into decision layers:
-
-- chord layer: `family`, `quality`, `extensions`
-- harmony tier:
-  - `foundation`: major, minor, and power chords.
-  - `core_color`: dominant7, minor7, major7, sus, add9, and sixth chords.
-  - `extended_color`: 9/11/13, minor9, major9, and slash chords.
-  - `special_altered`: diminished, half-diminished, and augmented chords.
-- shape layer: `open`, `barre`, `partial`, `movable`, `modern_open`, `high_position`
-- difficulty layer: `easy`, `medium`, `hard`
-- playability tier:
-  - `open_basic`: low-position open shapes suitable for first-pass release curation.
-  - `practical_low_mid`: low/mid-position shapes with manageable fret span.
-  - `movable_closed`: movable or barre shapes useful for transposition and style control.
-  - `upper_position`: high-position shapes that need stronger musical intent.
-  - `special_shape`: shapes that do not fit the main playability buckets.
-- voice-leading layer: `bass_note`, `top_note`, `open_strings`, `fret_center`, `fret_span`
-- style layer: numeric `style_fit` for `pop`, `rock`, `rnb`, `blues`, and `funk`
-- review layer: `release_default`, `external_import_needs_review`, or other curation states
-- review priority:
-  - `p0_curated_release`: manually curated release defaults.
-  - `p1_core_audit`: algorithmically selected core triad/power chord audit pool.
-  - `p2_color_audit`: common seventh/sus/add/sixth color audit pool.
-  - `p3_style_extension_audit`: style-specific extended-color audit pool.
-  - `p4_backlog`: advanced, high-position, hard, or lower-priority shapes.
-- release layer:
-  - `release_core`
-  - `core_candidate`
-  - `color_candidate`
-  - `style_extension_candidate`
-  - `advanced_backlog`
-
-Regenerate this index after changing either voicing database:
-
-```bash
-python scripts/build_voicing_layers.py --pretty
-```
-
-The builder also writes split sidecar indexes under `resources/voicing_db/indexes/layer_indexes/`:
-
-- `manifest.json`: lists the sidecar files and their purpose.
-- `musical_taxonomy.json`: family, quality, and harmony-tier indexes.
-- `guitar_playability.json`: shape, difficulty, position, and playability-tier indexes.
-- `release_review_pools.json`: release layer and review-priority indexes for curation.
-- `style_fit.json`: style-fit indexes for `pop`, `rock`, `rnb`, `blues`, and `funk`.
-- `voice_leading.json`: top-note and bass-note indexes for smoother adjacent chord selection.
+`resources/voicing_db/indexes/` contains optional release inspection indexes. They are useful for audits and future filtering, but the runtime arranger does not depend on a generation script for them.
 
 Do not generate new chord shapes from chord formulas in the release pipeline. If coverage is missing, import another licensed source or add a manually reviewed voicing with provenance.
 
