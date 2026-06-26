@@ -17,9 +17,11 @@ musical decisions** and the script owns the mechanical arrangement:
    12-bar templates, and borrowed chords are decided — by you, using music
    theory and the style cards, not by brittle regex in the script.
 2. **Mechanical arrangement (script).** Hand the concrete chords plus explicit
-   parameters to `scripts/compose_guitar.py` via `--chords`. The script does
-   only deterministic work: voicing selection, position filtering, small-triad
-   computation, capo transposition, voice-leading path search, and exports.
+   parameters to `scripts/compose_guitar.py` via `--chords`, and always include
+   `--diagram-png-output <path>` for every arrangement. The script does only
+   deterministic work: voicing selection, position filtering, small-triad
+   computation, capo transposition, voice-leading path search, PNG rendering,
+   and exports.
 3. **Review (agent).** Inspect the arranged voicings for commonness,
    playability, and whether every user requirement was met. Fix or re-run if
    not. See "Agent Review".
@@ -58,7 +60,8 @@ what you give it.
 ```bash
 python scripts/compose_guitar.py \
   --chords "E B C#m G#m A E F#m B" \
-  --key "E major" --style pop --user-level intermediate --pretty
+  --key "E major" --style pop --user-level intermediate \
+  --diagram-png-output /tmp/arrangement.png --pretty
 ```
 
 Flags:
@@ -74,6 +77,8 @@ Flags:
   (middle ≈ 5-9, high ≈ 10-15, low/open ≈ 0-3).
 - `--small-triad-strings "3,4,5"`: compute compact triads on the given strings
   (`3,4,5` = G/B/e, `2,3,4` = D/G/B). Best for band comping on top strings.
+- `--diagram-png-output <path>`: **required for every arrangement.** Use a
+  request-specific filename and return the generated PNG path to the user.
 - `--known-chords`, `--bpm`, `--time-signature`, `--title`, `--goal`: optional.
 
 A legacy natural-language mode (`compose_guitar.py '...'`) still exists for
@@ -267,9 +272,11 @@ Do:
 - always use database voicings; never invent frets or fingerings
 - report unavoidable hard shapes or simplifications in `validation.warnings`
 
-### Chord Diagram PNG Requested
+### Chord Diagram PNG Export
 
-Use when the user asks for 和弦图, 指法图, chord diagrams, PNG, or visual fingering output.
+Use for every arrangement. The PNG chord sheet is a standard deliverable, not
+an optional export that only happens when the user asks for 和弦图, 指法图,
+chord diagrams, PNG, or visual fingering output.
 
 Read:
 
@@ -280,7 +287,7 @@ Do:
 
 - render only selected database-backed voicings from `exports.chord_diagrams`
 - do not draw guessed or formula-generated diagrams
-- pass `--diagram-png-output` when running `scripts/compose_guitar.py`
+- pass `--diagram-png-output <path>` every time you run `scripts/compose_guitar.py`
 - the PNG is a practice sheet by default: a header strip (key/capo/bpm/time/style), the ordered bar-by-bar progression with roman-numeral degrees, then the deduplicated chord shapes
 - pass `--show-all` (or `--layout grid`) to `scripts/render_chord_diagrams.py` if the user wants every voicing in progression order or a plain diagram grid
 - return the PNG path to the user
@@ -435,7 +442,8 @@ Small triads on the top three strings (G/B/e) for band comping:
 ```bash
 python scripts/compose_guitar.py \
   --chords "G Em C D" --key "G major" --style pop \
-  --user-level intermediate --small-triad-strings "3,4,5" --pretty
+  --user-level intermediate --small-triad-strings "3,4,5" \
+  --diagram-png-output /tmp/g-major-top-triads.png --pretty
 ```
 
 Beginner request that allows a capo:
@@ -443,7 +451,8 @@ Beginner request that allows a capo:
 ```bash
 python scripts/compose_guitar.py \
   --chords "C G Am F" --key "C major" --style pop \
-  --user-level beginner --capo-policy auto --pretty
+  --user-level beginner --capo-policy auto \
+  --diagram-png-output /tmp/beginner-c-major.png --pretty
 ```
 
 Render chord shapes to PNG, or write all export files:
@@ -502,7 +511,7 @@ The composer returns:
 - `practice_notes`
 - `validation`
 
-`exports.chord_diagrams` contains the selected voicing objects. `exports.chord_diagrams_png` is populated only when a PNG output path is requested.
+`exports.chord_diagrams` contains the selected voicing objects. `exports.chord_diagrams_png` must be populated for every standard arrangement because `--diagram-png-output <path>` is required.
 
 When `--export-dir` is provided, the composer writes:
 
