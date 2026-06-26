@@ -1,6 +1,6 @@
 interface:
   display_name: "Guitar Arrange"
-  short_description: "Playable guitar harmony and voicing arranger"
-  default_prompt: "Use $guitar-arrange-skill to turn this chord progression into a playable guitar arrangement."
+  short_description: "Guitar voicing & fingering arranger — degree notation, style coloring, position targeting, small triads, PNG chord sheets"
+  default_prompt: "Use $guitar-arrange-skill to arrange this guitar request: pick voicings, handle degree notation (e.g. 1-5-6-4), apply style coloring, target a fret position, or generate small-triad comping shapes. Always render a PNG chord-sheet at the end."
 policy:
   allow_implicit_invocation: true

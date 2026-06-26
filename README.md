@@ -1,135 +1,120 @@
-# AI Musician Skills（AI 音乐人技能集）
+# AI Musician Skills
 
-> 一套面向 LLM Agent 的技能(skills),专门帮真正玩音乐的人搞定"扒谱"里最枯燥又最难的环节:
-> 把一段和弦进行,变成你这个水平、这个风格实际弹得出来的东西。
+> 帮助音乐人把创作灵感变成各乐器真正能上手的编配版本。
 
-市面上有不少付费工具能直接给你打印一张和弦谱——但**原调、原把位**的和弦谱,对业余爱好者来说往往根本按不动。真正有意思的问题不是"**拿到**和弦",而是"**把这些和弦变成我这个水平、我这个风格弹得出来的东西**"。这一步,正是这套技能要解决的。
+AI Musician Skills 是一套 Agent 编曲辅助技能集，借助 Agent 的理解和规划能力，把复杂的编曲判断拆成清晰、可执行的建议——让新手快速跨过"看得懂但弹不出来"的阶段，也让有经验的编曲人更快完成从想法到谱面的转化。
 
-这套技能设计成可以装进 LLM Agent 运行时(Claude / Codex 的 agent skills)。Agent 读取技能的 `SKILL.md`,然后把附带的 Python 脚本当工具调用。你也可以直接在终端里运行这些脚本。
+---
 
-> **当前版本聚焦一个技能:`guitar-arrange-skill`(吉他和弦指法 / 编配)。**
-> 这是整套构想里最先打磨成熟的一块。更多编曲辅助技能(钢琴、贝斯、鼓组、和声分析)正在路上——见下方[路线图](#技能路线图)。
+## 📢 News
 
+**2026-06** — 开源第一个技能：[**`guitar-arrange-skill`**](#guitar-arrange-skill) 🎸
 
-## 这个技能做什么
+面向吉他手的智能指法安排技能，支持数字级数输入、风格化编配、中高把位、小型三和弦、R&B 色彩和弦等场景。
 
-```
-  一串和弦 / 一句自然语言请求
-          │
-          ▼
-  ┌────────────────────┐    "把它变成我弹得出来的"
-  │ guitar-arrange-skill│ ── 变调夹选择、实际弹奏调、
-  └────────────────────┘    匹配你水平和风格的把位/指法、和弦图 PNG
-          │
-          ▼
-   主旋律谱 · ChordPro · 练习用纯文本 · 和弦图
-```
+---
 
-`guitar-arrange-skill` 解决的是吉他手真正的痛点:**变调夹怎么选、实际弹哪个把位、什么指法既好按又对味**。
-它**完全基于文本输入**工作(一串和弦,或一句自然语言请求),不需要 GPU,不需要音频。
+## guitar-arrange-skill
+
+把一段和弦进行（或自然语言描述）变成一份**真正可弹奏**的吉他编配，包含指法选择、把位安排和和弦图输出。
+
+### 能处理什么
+
+- **数字级数 → 指法**：`E 大调 1-5-6-3-4-1-2-5` 直接转成具体和弦 + 常用指型
+- **风格化编配**：R&B 进阶指法、Blues 12小节展开、流行三和弦等
+- **把位限定**：指定不同把位时安排合适的吉他指法
+- **小型三和弦**：乐队伴奏场景，生成高音1–3弦上的三和弦压缩指型
 
 
-## 安装
+### 示例输出
 
-技能目录是自包含的(`SKILL.md` + `scripts/` + `agents/openai.yaml`),
-遵循 [Agent Skills](https://agentskills.io) 标准,所以同一个文件夹可以同时装进
-Claude Code 和 Codex CLI。
+**C 大调 R&B 进阶 `4-5-3-6-2-5-1`**（Fmaj7 G9 Em7 Am7 Dm7 G9 Cmaj7）
 
-### 一键安装(推荐)
+![C大调 RnB 进阶编配](assets/02-Cmajor-rnb-4536251.png)
+
+**E 大调 `1-5-6-4` 中间把位**（E B C#m A，5–9 品区间）
+
+![E大调中间把位编配](assets/04-Emajor-1564-middle.png)
+
+**G 大调 `1-6-4-5` 小型三和弦**（G Em C D，高音1–3弦乐队伴奏指型）
+
+![G大调小型三和弦编配](assets/05-Gmajor-1645-smalltriad.png)
+
+### 安装
 
 ```bash
 git clone https://github.com/jassary08/AI-Musician-Skills.git
 cd AI-Musician-Skills
-./install.sh              # 把技能同时装进两个运行时(软链接方式)
+./install.sh          # 同时安装到 Claude Code 和 Codex CLI（软链接）
 ```
 
-软链接安装会让已安装的技能随着仓库 `git pull` 自动保持同步。常用参数:
-
 ```bash
-./install.sh --target claude   # 只装 Claude Code (~/.claude/skills/)
-./install.sh --target codex     # 只装 Codex CLI ($CODEX_HOME/skills/)
-./install.sh --copy             # 复制一份快照,而不是软链接
-./install.sh --uninstall        # 移除已安装的技能/链接
+./install.sh --target claude   # 只装 Claude Code
+./install.sh --target codex    # 只装 Codex CLI
+./install.sh --uninstall       # 卸载
 ```
 
-装完后重启你的 agent(或开一个新会话),它才会扫描到新目录。
-
-### 手动安装
-
-一个技能就是一个含 `SKILL.md` 的目录;把它丢进运行时的 skills 文件夹即可:
-
-| 运行时 | 个人目录 | 显式调用 |
-|---|---|---|
-| **Claude Code** | `~/.claude/skills/guitar-arrange-skill/` | `/guitar-arrange-skill` |
-| **Codex CLI** | `~/.codex/skills/guitar-arrange-skill/`(即 `$CODEX_HOME/skills/`) | `/use guitar-arrange-skill` |
-
-对 Claude Code,你也可以按项目安装:把技能放到所在仓库的
-`.claude/skills/guitar-arrange-skill/` 下即可。
+装完后重启 Agent 会话，技能即生效。也可以手动软链接：
 
 ```bash
-# 示例:手动把技能软链接进 Claude Code
 mkdir -p ~/.claude/skills
 ln -s "$PWD/guitar-arrange-skill" ~/.claude/skills/guitar-arrange-skill
 ```
 
-调用是隐式的——agent 会根据 `SKILL.md` 里的描述自动选用技能(触发语句如
-"写吉他和弦"、"推荐变调夹"、"改编成吉他版"、"挑把位/指法"、"画和弦图")。
-你也可以用技能名显式调用。
+### 使用方式
 
-## 技能详情:`guitar-arrange-skill`
+Agent 会根据 `SKILL.md` 自动识别并调用（触发词如"帮我安排吉他指法"、"编配成吉他版"、"推荐变调夹"、"给我中间把位"、"小型三和弦"）。也可以直接跑脚本：
 
-把一段和弦进行,或一句自然语言请求,变成一份**可弹奏**的吉他编配:
+```bash
+# Agent 传入具体和弦（推荐方式）
+python guitar-arrange-skill/scripts/compose_guitar.py \
+  --chords "E B C#m G#m A E F#m B" \
+  --key "E major" --style pop --user-level intermediate --pretty
 
-- 自动选择变调夹(0–5 品),落到容易按的开放和弦把位。
-- 按水平过滤:初学者路径避开横按;进阶路径在合适处用更丰富的把位。
-- 3,300+ 和弦指法, 并标注了常用度、风格契合度和可弹性。
-- 支持风格:`pop`、`rock`、`rnb`、`blues`、`funk`。
-- 导出:结构化 JSON、小节网格、主旋律谱、纯文本练习单、ChordPro(`.cho`),以及 PNG 吉他和弦图。
+# 中间把位
+python guitar-arrange-skill/scripts/compose_guitar.py \
+  --chords "E B C#m A" --key "E major" --position-range "5-9" --pretty
 
-入口:`guitar-arrange-skill/scripts/compose_guitar.py`(自然语言请求),
-`guitar-arrange-skill/scripts/arrange_guitar.py`(固定进行)。
+# 小型三和弦（高音三根弦）
+python guitar-arrange-skill/scripts/compose_guitar.py \
+  --chords "G Em C D" --key "G major" --small-triad-strings "3,4,5" --pretty
 
-## 把位数据:成熟度说明
+# 导出和弦图 PNG
+python guitar-arrange-skill/scripts/compose_guitar.py \
+  --chords "Fmaj7 G9 Em7 Am7 Dm7 G9 Cmaj7" --key "C major" --style rnb \
+  --diagram-png-output /tmp/chords.png --pretty
+```
 
-吉他编配器内置的把位数据库源自
-[tombatossals/chords-db](https://github.com/tombatossals/chords-db)(MIT 许可)。
-数据已经过重新格式化、标注和建立索引,但大部分条目仍标记为
-`review_status: external_import_needs_review`(待人工复核)。已人工确认的把位标记为
-`status: preferred` 或 `status: approved`。你可以编辑
-`resources/voicing_db/overlays/commonness_annotations.json`,把你信任的把位提升等级。
+支持风格：`pop` `rock` `rnb` `blues` `funk`
 
-## 技能路线图
+---
 
-`guitar-arrange-skill` 是这套构想里最先成熟的一块。后续会陆续补上更多**编曲辅助**技能,
-最终目标是一整套"把灵感变成各乐器可弹奏谱面"的 agent 工具链:
+## 路线图
 
 | # | 技能 | 状态 |
-|---|-------|--------|
-| 1 | `guitar-arrange-skill` —— 变调夹、把位、主旋律谱、ChordPro、PNG | ✅ 已发布 |
-| 2 | 和声分析技能 —— 罗马数字级数、和声功能、终止式 | 🔜 计划中 |
-| 3 | 钢琴把位技能 —— shell voicing、开放排列、重配和声 | 🔜 计划中 |
-| 4 | 贝斯线技能 —— 根据和弦谱生成 walking bass、律动型 | 🔜 计划中 |
-| 5 | 鼓组律动技能 —— 根据段落给出风格化的律动建议 | 🔜 计划中 |
+|---|---|---|
+| 1 | `guitar-arrange-skill` — 变调夹、把位、指法、和弦图 | ✅ 已发布 |
+| 2 | 和声分析 — 罗马数字级数、和声功能、终止式 | 🔜 计划中 |
+| 3 | 钢琴把位 — shell voicing、开放排列、重配和声 | 🔜 计划中 |
+| 4 | 贝斯线 — 根据和弦谱生成 walking bass、律动型 | 🔜 计划中 |
+| 5 | 鼓组律动 — 根据段落风格给出律动建议 | 🔜 计划中 |
+
+---
 
 ## 目录结构
 
 ```
 AI-Musician-Skills/
   README.md
-  LICENSE
-  THIRD_PARTY_LICENSES.md
-  install.sh                     ← 把技能装进 Claude Code / Codex
-  examples/                      ← 真实生成的输出,建议从这里开始看
+  install.sh                     ← 安装脚本
+  assets/                       ← 示例输出图
   guitar-arrange-skill/
-    SKILL.md                     ← agent 指令文档
-    agents/openai.yaml           ← agent 注册元数据
-    references/                  ← schema、编配规则
-    resources/                   ← 风格卡、规则文件、把位数据库
-    scripts/                     ← 可运行的 Python 入口
+    SKILL.md                     ← Agent 指令文档
+    agents/openai.yaml           ← Agent 注册元数据
+    resources/                   ← 风格卡、规则文件、和弦数据库
+    scripts/                     ← Python 入口脚本
 ```
 
 ## 相关项目
 
-- **AI-ChordCraft(demo)** —— 催生了这套技能集的、由 LLM 编排的音频扒谱流水线。
-  需要 GPU;仅开源代码。
-  <https://github.com/jassary08/AI-ChordCraft>
+- **AI-ChordCraft** — <https://github.com/jassary08/AI-ChordCraft>

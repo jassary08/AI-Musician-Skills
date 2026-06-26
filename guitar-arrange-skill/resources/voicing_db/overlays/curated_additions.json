@@ -1,0 +1,186 @@
+{
+  "version": "1.1.0",
+  "description": "Hand-curated voicings that fill gaps in the source DB. All barre entries must use an E-shape (root on string 6) or A-shape (root on string 5) — G/C/D-shape barres are excluded. Add new shapes here; never edit chords_db_voicings.json.",
+  "voicings": [
+    {
+      "symbol": "B",
+      "frets": [-1, 2, 4, 4, 4, 2],
+      "fingers": [0, 1, 2, 3, 4, 1],
+      "position": 2,
+      "barres": [2],
+      "difficulty": 3,
+      "tags": ["barre", "common", "curated"],
+      "annotation": {
+        "commonness": 5,
+        "status": "preferred",
+        "styles": ["pop", "rock", "blues"],
+        "contexts": ["campfire", "low_position", "barre"]
+      }
+    },
+    {
+      "symbol": "C#m",
+      "frets": [-1, 4, 6, 6, 5, 4],
+      "fingers": [0, 1, 3, 4, 2, 1],
+      "position": 4,
+      "barres": [4],
+      "difficulty": 3,
+      "tags": ["barre", "common", "curated"],
+      "annotation": {
+        "commonness": 5,
+        "status": "preferred",
+        "styles": ["pop", "rock", "rnb"],
+        "contexts": ["barre", "low_position"]
+      }
+    },
+    {
+      "symbol": "C#m",
+      "frets": [9, 11, 11, 9, 9, 9],
+      "fingers": [1, 3, 4, 1, 1, 1],
+      "position": 9,
+      "barres": [9],
+      "difficulty": 3,
+      "tags": ["barre", "curated", "movable"],
+      "annotation": {
+        "commonness": 4,
+        "status": "common",
+        "styles": ["pop", "rock", "rnb"],
+        "contexts": ["barre", "mid_position"]
+      }
+    },
+    {
+      "symbol": "G#m",
+      "frets": [4, 6, 6, 4, 4, 4],
+      "fingers": [1, 3, 4, 1, 1, 1],
+      "position": 4,
+      "barres": [4],
+      "difficulty": 3,
+      "tags": ["barre", "common", "curated"],
+      "annotation": {
+        "commonness": 5,
+        "status": "preferred",
+        "styles": ["pop", "rock"],
+        "contexts": ["barre", "low_position"]
+      }
+    },
+    {
+      "symbol": "Cmaj7",
+      "frets": [-1, 3, 2, 0, 0, 0],
+      "fingers": [0, 3, 2, 0, 0, 0],
+      "position": 1,
+      "barres": [],
+      "difficulty": 1,
+      "tags": ["open", "common", "curated"],
+      "annotation": {
+        "commonness": 5,
+        "status": "preferred",
+        "styles": ["pop", "rnb", "folk"],
+        "contexts": ["campfire", "open", "low_position"]
+      }
+    },
+    {
+      "symbol": "F#",
+      "frets": [2, 4, 4, 3, 2, 2],
+      "fingers": [1, 3, 4, 2, 1, 1],
+      "position": 2,
+      "barres": [2],
+      "difficulty": 3,
+      "tags": ["barre", "common", "curated"],
+      "annotation": {
+        "commonness": 5,
+        "status": "preferred",
+        "styles": ["pop", "rock"],
+        "contexts": ["barre", "low_position"]
+      }
+    },
+    {
+      "symbol": "Bb",
+      "frets": [-1, 1, 3, 3, 3, 1],
+      "fingers": [0, 1, 2, 3, 4, 1],
+      "position": 1,
+      "barres": [1],
+      "difficulty": 3,
+      "tags": ["barre", "common", "curated"],
+      "annotation": {
+        "commonness": 5,
+        "status": "preferred",
+        "styles": ["pop", "rnb", "blues"],
+        "contexts": ["barre", "low_position"]
+      }
+    },
+    {
+      "symbol": "Eb",
+      "frets": [-1, -1, 5, 3, 4, 3],
+      "fingers": [0, 0, 4, 1, 3, 2],
+      "position": 3,
+      "barres": [],
+      "difficulty": 2,
+      "tags": ["curated"],
+      "annotation": {
+        "commonness": 4,
+        "status": "common",
+        "styles": ["rnb", "blues"],
+        "contexts": ["low_position"]
+      }
+    },
+    {
+      "symbol": "F#m",
+      "frets": [2, 4, 4, 2, 2, 2],
+      "fingers": [1, 3, 4, 1, 1, 1],
+      "position": 2,
+      "barres": [2],
+      "difficulty": 3,
+      "tags": ["barre", "common", "curated"],
+      "annotation": {
+        "commonness": 5,
+        "status": "preferred",
+        "styles": ["pop", "rock"],
+        "contexts": ["barre", "low_position"]
+      }
+    },
+    {
+      "symbol": "C#",
+      "frets": [-1, 4, 3, 1, 1, 1],
+      "fingers": [0, 4, 3, 1, 1, 1],
+      "position": 1,
+      "barres": [1],
+      "difficulty": 3,
+      "tags": ["barre", "curated"],
+      "annotation": {
+        "commonness": 4,
+        "status": "common",
+        "styles": ["pop", "rock"],
+        "contexts": ["barre"]
+      }
+    },
+    {
+      "symbol": "G9",
+      "frets": [3, -1, 3, 2, 3, -1],
+      "fingers": [2, 0, 3, 1, 4, 0],
+      "position": 2,
+      "barres": [],
+      "difficulty": 3,
+      "tags": ["movable", "color", "curated"],
+      "annotation": {
+        "commonness": 4,
+        "status": "common",
+        "styles": ["rnb", "funk", "blues"],
+        "contexts": ["mid_position", "small_voicing"]
+      }
+    },
+    {
+      "symbol": "G9",
+      "frets": [-1, -1, 0, 2, 0, 1],
+      "fingers": [0, 0, 0, 2, 0, 1],
+      "position": 1,
+      "barres": [],
+      "difficulty": 2,
+      "tags": ["color", "curated"],
+      "annotation": {
+        "commonness": 3,
+        "status": "usable",
+        "styles": ["rnb", "funk"],
+        "contexts": ["partial", "small_voicing"]
+      }
+    }
+  ]
+}

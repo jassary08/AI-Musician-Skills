@@ -46,13 +46,30 @@ def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def load_curated_additions() -> list[dict[str, Any]]:
+    path = VOICING_DIR / "overlays" / "curated_additions.json"
+    if not path.exists():
+        return []
+    payload = load_json(path)
+    items = payload.get("voicings") if isinstance(payload, dict) else payload
+    if not isinstance(items, list):
+        return []
+    # Curated entries carry their own inline annotation; keep it as-is.
+    return items
+
+
 def load_voicings() -> list[dict[str, Any]]:
     payload = load_json(VOICINGS_PATH)
     if isinstance(payload, dict) and isinstance(payload.get("voicings"), list):
-        return apply_voicing_annotations(payload["voicings"])
-    if isinstance(payload, list):
-        return apply_voicing_annotations(payload)
-    raise ValueError(f"Invalid voicing database format: {VOICINGS_PATH}")
+        base = payload["voicings"]
+    elif isinstance(payload, list):
+        base = payload
+    else:
+        raise ValueError(f"Invalid voicing database format: {VOICINGS_PATH}")
+    annotated = apply_voicing_annotations(base)
+    curated = load_curated_additions()
+    # Curated voicings come first so they win ties in candidate ordering.
+    return merge_voicings(curated, annotated)
 
 
 def merge_voicings(*groups: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -181,6 +198,17 @@ def has_voicing(chord: str, index: dict[str, list[dict[str, Any]]]) -> bool:
     return normalize_symbol(chord) in index or simplify_chord(chord) in index
 
 
+def enharmonic_symbol(symbol: str) -> str:
+    """Return the enharmonic equivalent of a chord symbol (G#m <-> Abm)."""
+    root, suffix = split_chord(symbol)
+    if root not in PC:
+        return symbol
+    sharp = PITCHES_SHARP[PC[root]]
+    flat = PITCHES_FLAT[PC[root]]
+    other = flat if root == sharp else sharp
+    return f"{other}{suffix}"
+
+
 def voicing_candidates(
     chord: str,
     index: dict[str, list[dict[str, Any]]],
@@ -190,7 +218,17 @@ def voicing_candidates(
     symbol = normalize_symbol(chord)
     if symbol in index:
         return symbol, index[symbol], False
+    # Enharmonic fallback: the DB may store the same chord under its other
+    # spelling (e.g. G#m stored as Abm). Display keeps the requested spelling.
+    enharmonic = enharmonic_symbol(symbol)
+    if enharmonic != symbol and enharmonic in index:
+        return symbol, index[enharmonic], False
     simplified = simplify_chord(symbol, level=level, rules=simplification_rules)
+    if simplified in index:
+        return simplified, index[simplified], simplified != symbol
+    enharmonic_simplified = enharmonic_symbol(simplified)
+    if enharmonic_simplified != simplified and enharmonic_simplified in index:
+        return simplified, index[enharmonic_simplified], simplified != symbol
     return simplified, index.get(simplified, []), simplified != symbol
 
 
@@ -271,6 +309,42 @@ def choose_capo(payload: dict[str, Any], index: dict[str, list[dict[str, Any]]],
     }
 
 
+def barre_shape_family(item: dict[str, Any]) -> str | None:
+    """Classify a barre voicing by which open-chord shape it is moved up from.
+
+    Only the E-shape (root on string 6) and A-shape (root on string 5) barres
+    are idiomatic and widely played. G-shape, C-shape, and D-shape barres are
+    physically awkward and almost never used by real guitarists. Returns one of
+    "E", "A", "awkward", or None (not a barre / can't classify).
+    """
+    barres = item.get("barres") or []
+    if not barres:
+        return None
+    frets = item.get("frets", [])
+    if len(frets) < 6:
+        return None
+    barre_fret = min(int(b) for b in barres if isinstance(b, int)) if any(isinstance(b, int) for b in barres) else None
+    if barre_fret is None:
+        return None
+
+    # Which strings sound (fret >= 0), low-6 to high-1 = index 0..5.
+    sounding = [idx for idx, f in enumerate(frets) if isinstance(f, int) and f >= 0]
+    if not sounding:
+        return None
+    lowest_string = min(sounding)  # 0 = low E (string 6), 1 = A (string 5)
+
+    # The bass string must carry the barre fret for a true movable barre shape:
+    # E-shape barres across string 6, A-shape across string 5.
+    bass_fret = frets[lowest_string]
+    if not (isinstance(bass_fret, int) and bass_fret == barre_fret):
+        return "awkward"
+    if lowest_string == 0:
+        return "E"
+    if lowest_string == 1:
+        return "A"
+    return "awkward"
+
+
 def voicing_score(
     item: dict[str, Any],
     style: str,
@@ -316,6 +390,13 @@ def voicing_score(
         score += float(weights["avoid_for_penalty"])
     if item.get("barres"):
         score += float(weights["barre_beginner_penalty"] if level == "beginner" else weights["barre_intermediate_penalty"])
+        # Barre-shape family: reward idiomatic E/A-shape movable barres, penalize
+        # awkward G/C/D-shape barres that real guitarists avoid.
+        family = barre_shape_family(item)
+        if family in ("E", "A"):
+            score += float(weights.get("idiomatic_barre_bonus", 0))
+        elif family == "awkward":
+            score += float(weights.get("awkward_barre_penalty", 0))
     score += max(0, int(item.get("difficulty", 1)) - target_difficulty) * float(weights["difficulty_step_penalty"])
     frets = [int(fret) for fret in item.get("frets", []) if isinstance(fret, int) and fret > 0]
     if frets:
@@ -535,6 +616,77 @@ def modern_preferred_symbols(
     return result
 
 
+def assign_triad_fingers(target_strings: list[int], frets: list[int]) -> list[int]:
+    """Assign reasonable left-hand fingers to a small triad.
+
+    Notes are fingered in ascending fret order (1=index ... 4=pinky). Two notes
+    on the same fret on adjacent strings share a finger (a mini-barre); a same
+    fret on non-adjacent strings still reuses the finger since the small shapes
+    here never exceed three fretted strings.
+    """
+    fingers = [0] * 6
+    fretted = sorted(
+        ((s, f) for s, f in zip(target_strings, frets) if f > 0),
+        key=lambda sf: (sf[1], sf[0]),
+    )
+    next_finger = 1
+    fret_to_finger: dict[int, int] = {}
+    for string_idx, fret in fretted:
+        if fret in fret_to_finger:
+            fingers[string_idx] = fret_to_finger[fret]
+        else:
+            finger = min(next_finger, 4)
+            fret_to_finger[fret] = finger
+            fingers[string_idx] = finger
+            next_finger += 1
+    return fingers
+
+
+def compute_small_triads(chord_symbol: str, target_strings: list[int]) -> list[dict[str, Any]]:
+    """Generate 3-string triad voicings."""
+    root, suffix = split_chord(chord_symbol)
+    if root not in PC:
+        return []
+
+    root_pc = PC[root]
+    is_minor = suffix.lower().startswith('m') and not suffix.lower().startswith('maj')
+    chord_tones = [root_pc % 12, (root_pc + (3 if is_minor else 4)) % 12, (root_pc + 7) % 12]
+
+    from itertools import permutations
+    results = []
+
+    for perm in permutations(chord_tones):
+        frets = []
+        for string_idx, tone in zip(target_strings, perm):
+            open_pc = OPEN_STRING_PCS[string_idx]
+            fret = (tone - open_pc) % 12
+            frets.append(fret)
+
+        non_open = [f for f in frets if f > 0]
+        if non_open and max(non_open) - min(non_open) > 4:
+            continue
+
+        full_frets = [-1] * 6
+        for s, f in zip(target_strings, frets):
+            full_frets[s] = f
+        fingers = assign_triad_fingers(target_strings, frets)
+
+        results.append({
+            'symbol': chord_symbol,
+            'frets': full_frets,
+            'fingers': fingers,
+            'position': min(non_open) if non_open else 0,
+            'barres': [],
+            'tags': ['small_voicing', 'triad', 'computed'],
+            'difficulty': 2,
+            'reason': f'Small triad on strings {",".join(str(s+1) for s in target_strings)}'
+        })
+
+    # Prefer lower, compact shapes first.
+    results.sort(key=lambda r: (r['position'], max(f for f in r['frets'] if f > 0) if any(f > 0 for f in r['frets']) else 0))
+    return results[:4]
+
+
 def choose_voicings(
     chords: list[str],
     index: dict[str, list[dict[str, Any]]],
@@ -543,6 +695,8 @@ def choose_voicings(
     style_card: dict[str, Any],
     rules: dict[str, Any],
     known_chords: set[str],
+    position_range: tuple[int, int] | None = None,
+    small_triad_strings: list[int] | None = None,
 ) -> tuple[list[dict[str, Any]], list[str]]:
     warnings = []
     candidate_groups: list[list[dict[str, Any]]] = []
@@ -552,6 +706,23 @@ def choose_voicings(
     max_raw = int(pool_rules.get("max_raw_candidates_per_symbol", 80))
 
     for chord in chords:
+        # Small-triad mode: compute triad shapes algorithmically instead of DB lookup.
+        if small_triad_strings:
+            triads = compute_small_triads(chord, small_triad_strings)
+            if triads:
+                scored_candidates = []
+                for item in triads:
+                    local_score = voicing_score(
+                        item, style, level, style_card, rules, known_chords, modern_bonus=0.0,
+                    )
+                    scored_candidates.append(
+                        serialize_voicing_candidate(chord, chord, item, local_score, False, False, "")
+                    )
+                scored_candidates.sort(key=lambda item: float(item["_local_score"]), reverse=True)
+                candidate_groups.append(scored_candidates[:top_k])
+                continue
+            warnings.append(f"Could not compute small triad for {chord}; falling back to DB voicings.")
+
         preferred = modern_map.get(simplify_chord(chord, level="beginner", rules=rules["simplification"]))
         if preferred and preferred[0] in index:
             used_symbol = preferred[0]
@@ -576,6 +747,19 @@ def choose_voicings(
             candidate_groups.append([])
             continue
 
+        # Hard position filter: when the user explicitly requested a position
+        # range, restrict candidates to that range. Fall back to all candidates
+        # only if nothing remains in range.
+        if position_range is not None:
+            lo, hi = position_range
+            in_range = [c for c in candidates if lo <= int(c.get("position") or 1) <= hi]
+            if in_range:
+                candidates = in_range
+            else:
+                warnings.append(
+                    f"No {chord} voicing in position {lo}-{hi}; used nearest available."
+                )
+
         scored_candidates = []
         for item in candidates:
             local_score = voicing_score(
@@ -587,6 +771,16 @@ def choose_voicings(
                 known_chords,
                 modern_bonus=modern_bonus if normalize_symbol(item.get("symbol")) == used_symbol else 0.0,
             )
+            # Position-range preference: boost in-range voicings, penalize out-of-range.
+            if position_range is not None:
+                pos = int(item.get("position") or 1)
+                lo, hi = position_range
+                if lo <= pos <= hi:
+                    local_score += float((rules["voicing"]["weights"]).get("position_match_bonus", 4.0))
+                else:
+                    local_score -= float((rules["voicing"]["weights"]).get("position_mismatch_penalty", 2.0)) * min(
+                        abs(pos - lo), abs(pos - hi)
+                    )
             scored_candidates.append(
                 serialize_voicing_candidate(
                     chord,
@@ -692,7 +886,10 @@ def make_chordpro(payload: dict[str, Any], plan: dict[str, Any]) -> str:
         f"{{title: {title}}}",
         f"{{key: {payload.get('key', '')}}}",
         f"{{capo: {plan['capo']}}}",
-        f"{{tempo: {payload.get('bpm', '')}}}",
+    ]
+    if payload.get("bpm") not in (None, ""):
+        lines.append(f"{{tempo: {payload.get('bpm')}}}")
+    lines += [
         "",
         f"{{start_of_{section}}}",
         " ".join(f"[{chord}]" for chord in plan["display_chords"]),
@@ -789,6 +986,12 @@ def arrange(payload: dict[str, Any]) -> dict[str, Any]:
     known_chords = {normalize_symbol(chord) for chord in payload.get("known_chords") or []}
 
     capo_plan = choose_capo(payload, index, rules)
+    position_range = payload.get("position_range")
+    if isinstance(position_range, (list, tuple)) and len(position_range) == 2:
+        position_range = (int(position_range[0]), int(position_range[1]))
+    else:
+        position_range = None
+    small_triad_strings = payload.get("small_triad_strings") or None
     selected_voicings, warnings = choose_voicings(
         capo_plan["display_chords"],
         index,
@@ -797,6 +1000,8 @@ def arrange(payload: dict[str, Any]) -> dict[str, Any]:
         style_card,
         rules,
         known_chords,
+        position_range=position_range,
+        small_triad_strings=small_triad_strings,
     )
     result = {
         "title": str(payload.get("title") or "AI-ChordCraft Guitar Draft"),
@@ -963,6 +1168,30 @@ def roman_to_chord(key: str, roman: str) -> str:
     return chord_from_degree(key, degree, quality_override)
 
 
+def _coalesce_bpm(context: dict[str, Any], payload: dict[str, Any]) -> int | None:
+    """Return an explicit BPM if the user supplied one, else None.
+
+    No default tempo is invented: the renderer and exports skip BPM when it is
+    None so the sheet does not show a fabricated number.
+    """
+    for source in (context.get("bpm"), context.get("tempo"), payload.get("bpm"), payload.get("tempo")):
+        if source in (None, ""):
+            continue
+        try:
+            value = int(float(source))
+        except (TypeError, ValueError):
+            continue
+        if 20 <= value <= 320:
+            return value
+    request = str(payload.get("request") or payload.get("goal") or "")
+    match = re.search(r"(\d{2,3})\s*(?:bpm|拍|拍子|的速度)", request, re.IGNORECASE)
+    if match:
+        value = int(match.group(1))
+        if 20 <= value <= 320:
+            return value
+    return None
+
+
 def parse_chord_list(value: Any) -> list[str]:
     if isinstance(value, list):
         return [normalize_symbol(item) for item in value if normalize_symbol(item)]
@@ -972,14 +1201,45 @@ def parse_chord_list(value: Any) -> list[str]:
     return [normalize_symbol(part) for part in parts if normalize_symbol(part)]
 
 
-def extract_chords_from_request(request: str) -> list[str]:
+_KEY_DECL = re.compile(
+    r"[A-G](?:#|b)?\s*(?:大调|小调)"          # Chinese key declarations — no \b needed
+    r"|[A-G](?:#|b)?\s+(?:major|minor)\b",    # English key declarations — space required before word
+    re.IGNORECASE,
+)
+
+# Style/genre tokens that embed a bare note letter (the "B" in "R&B") and would
+# otherwise be mis-read as a chord. Masked before chord extraction.
+_STYLE_NOISE = re.compile(r"r\s*&\s*b|rnb|r&b", re.IGNORECASE)
+
+
+def parse_degree_notation(request: str, key: str) -> list[str]:
+    """Parse numeric degree notation like '1-5-6-3-4-1-2-5' into chord symbols."""
+    pattern = r'(?<![A-Za-z])(\d+(?:[-\s]+\d+){2,})(?![A-Za-z])'
+    match = re.search(pattern, request)
+    if not match:
+        return []
+    degrees = [int(d) for d in re.split(r'[-\s]+', match.group(1)) if d.isdigit() and 1 <= int(d) <= 7]
+    return [chord_from_degree(key, d) for d in degrees] if degrees else []
+
+
+def extract_chords_from_request(request: str, key: str = "") -> list[str]:
+    # Try numeric degree notation first
+    if key:
+        degree_chords = parse_degree_notation(request, key)
+        if degree_chords:
+            return degree_chords
+    # Blank key-declaration tokens (e.g. "E 大调", "C major") and genre tokens
+    # that embed a note letter (e.g. "R&B") before extraction so they are not
+    # mistaken for chords in the progression.
+    masked = _KEY_DECL.sub(lambda m: " " * len(m.group()), request)
+    masked = _STYLE_NOISE.sub(lambda m: " " * len(m.group()), masked)
     chord_pattern = re.compile(
         r"(?<![A-Za-z#])"
         r"([A-G](?:#|b)?(?:maj9|maj7|mmaj9|mmaj7|m9|m7|m|dim|aug|sus2|sus4|sus|add9|9|7|6)?(?:/[A-G](?:#|b)?)?)"
         r"(?![A-Za-z#])"
     )
-    chords = [normalize_symbol(match.group(1)) for match in chord_pattern.finditer(request)]
-    # A single key mention such as "C 大调" or "E minor" is not a progression.
+    chords = [normalize_symbol(match.group(1)) for match in chord_pattern.finditer(masked)]
+    # A single key mention is not a progression.
     return chords if len(chords) >= 2 else []
 
 
@@ -1064,7 +1324,7 @@ def infer_bar_count(request: str, context: dict[str, Any], style: str) -> int:
     return 8
 
 
-def infer_capo_policy(request: str, constraints: dict[str, Any]) -> tuple[str, int | None]:
+def infer_capo_policy(request: str, constraints: dict[str, Any], level: str) -> tuple[str, int | None]:
     if isinstance(constraints.get("preferred_capo"), int):
         return "fixed", int(constraints["preferred_capo"])
     policy = str(constraints.get("capo_policy") or "").lower()
@@ -1074,6 +1334,9 @@ def infer_capo_policy(request: str, constraints: dict[str, Any]) -> tuple[str, i
         return "no_capo", 0
     if text_contains(request, ["变调夹", "capo"]):
         return "auto", None
+    # Intermediate users default to no capo unless explicitly requested
+    if level == "intermediate":
+        return "no_capo", 0
     return "auto", None
 
 
@@ -1086,6 +1349,26 @@ def infer_color_level(request: str, goal: dict[str, Any], style: str) -> str:
     if text_contains(request, ["简单", "朴素", "plain", "三和弦"]):
         return "plain"
     return "light"
+
+
+def infer_position_range(request: str) -> tuple[int, int] | None:
+    """Infer target position range from request."""
+    if text_contains(request, ["中间把位", "中把位", "middle position"]):
+        return (5, 9)
+    if text_contains(request, ["高把位", "high position"]):
+        return (10, 15)
+    if text_contains(request, ["低把位", "low position", "开放把位"]):
+        return (0, 3)
+    return None
+
+
+def infer_small_triad_mode(request: str) -> tuple[bool, list[int]]:
+    """Returns (is_small_triad, target_strings)."""
+    if text_contains(request, ["1,2,3弦", "123弦", "高音三根弦", "top 3 strings"]):
+        return (True, [3, 4, 5])  # G, B, e
+    if text_contains(request, ["2,3,4弦", "234弦", "middle 3 strings"]):
+        return (True, [2, 3, 4])  # D, G, B
+    return (False, [])
 
 
 def has_minor_quality(chord: str) -> bool:
@@ -1189,7 +1472,10 @@ def plan_progression(
     return expand_to_bars(chords, min(bar_count, 16)), {"source": "template", "template": f"{style}_{section}_{mode}"}
 
 
-def compact_progression(chords: list[str]) -> list[str]:
+def compact_progression(chords: list[str], style: str = "") -> list[str]:
+    # Never compact blues progressions - sequence matters
+    if style == "blues":
+        return chords
     if len(chords) <= 8:
         return chords
     result = []
@@ -1279,7 +1565,10 @@ def make_chordpro_full(result: dict[str, Any], plan: dict[str, Any]) -> str:
         f"{{title: {result.get('title', 'AI-ChordCraft Guitar Arrangement')}}}",
         f"{{key: {plan['key']}}}",
         f"{{capo: {result.get('capo', 0)}}}",
-        f"{{tempo: {result.get('bpm', '')}}}",
+    ]
+    if result.get("bpm") not in (None, ""):
+        lines.append(f"{{tempo: {result.get('bpm')}}}")
+    lines += [
         "",
         f"{{start_of_{plan['section']}}}",
     ]
@@ -1380,10 +1669,10 @@ def normalize_request_payload(payload: dict[str, Any]) -> dict[str, Any]:
     level = infer_level(request, guitar_constraints)
     bar_count = infer_bar_count(request, music_context, style)
     color_level = infer_color_level(request, harmony_goal, style)
-    capo_policy, inferred_capo = infer_capo_policy(request, guitar_constraints)
-    source_chords = parse_chord_list(payload.get("source_chords") or payload.get("chords")) or extract_chords_from_request(request)
+    capo_policy, inferred_capo = infer_capo_policy(request, guitar_constraints, level)
+    source_chords = parse_chord_list(payload.get("source_chords") or payload.get("chords")) or extract_chords_from_request(request, key)
     planned_chords, plan = plan_progression(key, style, section, bar_count, color_level, source_chords, request)
-    arranger_chords = compact_progression(planned_chords)
+    arranger_chords = compact_progression(planned_chords, style)
 
     preferred_capo = guitar_constraints.get("preferred_capo")
     if capo_policy == "no_capo":
@@ -1393,11 +1682,14 @@ def normalize_request_payload(payload: dict[str, Any]) -> dict[str, Any]:
     elif not isinstance(preferred_capo, int):
         preferred_capo = None
 
+    position_range = infer_position_range(request)
+    small_triad, small_triad_strings = infer_small_triad_mode(request)
+
     return {
         "task": "guitar_arrange",
         "title": str(payload.get("title") or "AI-ChordCraft Guitar Arrangement"),
         "key": key,
-        "bpm": int(music_context.get("bpm") or music_context.get("tempo") or payload.get("bpm") or 92),
+        "bpm": _coalesce_bpm(music_context, payload),
         "time_signature": str(music_context.get("time_signature") or payload.get("time_signature") or "4/4"),
         "section": section,
         "style": style,
@@ -1407,6 +1699,8 @@ def normalize_request_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "preferred_capo": preferred_capo,
         "capo_policy": capo_policy,
         "known_chords": guitar_constraints.get("known_chords") or payload.get("known_chords") or [],
+        "position_range": list(position_range) if position_range else None,
+        "small_triad_strings": small_triad_strings if small_triad else None,
         "_composition_plan": {
             **plan,
             "request": request,
@@ -1416,6 +1710,8 @@ def normalize_request_payload(payload: dict[str, Any]) -> dict[str, Any]:
             "bar_count": bar_count,
             "color_level": color_level,
             "capo_policy": capo_policy,
+            "position_range": list(position_range) if position_range else None,
+            "small_triad_strings": small_triad_strings if small_triad else None,
             "planned_chords": planned_chords,
             "arranger_chords": arranger_chords,
         },
@@ -1444,6 +1740,144 @@ def compose(payload: dict[str, Any]) -> dict[str, Any]:
     result.setdefault("exports", {}).update(build_diverse_exports(result, plan))
     return result
 
+
+def compose_explicit(payload: dict[str, Any]) -> dict[str, Any]:
+    """Arrange an explicit, agent-supplied chord list.
+
+    This is the primary entrypoint. The agent does intent understanding and
+    style coloring up front, then hands the concrete chords to this pure
+    arranger. No degree parsing, template generation, or genre coloring happens
+    here — the chords are taken exactly as given.
+
+    Required: ``chords`` (list or whitespace/comma/dash-separated string).
+    Optional: ``key``, ``style``, ``section``, ``user_level``, ``preferred_capo``,
+    ``capo_policy``, ``position_range`` ([lo, hi]), ``small_triad_strings``
+    (e.g. [3,4,5]), ``known_chords``, ``bpm``, ``time_signature``, ``title``,
+    ``goal``.
+    """
+    chords = parse_chord_list(payload.get("chords"))
+    if not chords:
+        raise ValueError("compose_explicit requires a non-empty 'chords' list.")
+
+    key = str(payload.get("key") or DEFAULT_KEY)
+    root, mode = parse_key(key)
+    key = key_text(root, mode)
+    style = str(payload.get("style") or "pop").lower()
+    section = str(payload.get("section") or "chorus")
+    level = str(payload.get("user_level") or "intermediate").lower()
+    if level not in SUPPORTED_LEVELS:
+        level = "intermediate"
+
+    # Capo policy is explicit here. Default: no capo unless the agent set one.
+    preferred_capo = payload.get("preferred_capo")
+    capo_policy = str(payload.get("capo_policy") or "").lower()
+    if not capo_policy:
+        capo_policy = "fixed" if isinstance(preferred_capo, int) else "no_capo"
+    if capo_policy == "no_capo":
+        preferred_capo = 0
+
+    position_range = payload.get("position_range")
+    if isinstance(position_range, (list, tuple)) and len(position_range) == 2:
+        position_range = [int(position_range[0]), int(position_range[1])]
+    else:
+        position_range = None
+
+    small_triad_strings = payload.get("small_triad_strings") or None
+    if isinstance(small_triad_strings, (list, tuple)):
+        small_triad_strings = [int(s) for s in small_triad_strings]
+    else:
+        small_triad_strings = None
+
+    style_card_style = style if style in SUPPORTED_STYLES else "pop"
+
+    arranger_payload = {
+        "task": "guitar_arrange",
+        "title": str(payload.get("title") or "AI-ChordCraft Guitar Arrangement"),
+        "key": key,
+        "bpm": _coalesce_bpm(payload, payload),
+        "time_signature": str(payload.get("time_signature") or "4/4"),
+        "section": section,
+        "style": style_card_style,
+        "user_level": level,
+        "goal": str(payload.get("goal") or "根据 Agent 给出的具体和弦进行编配"),
+        "chords": chords,
+        "preferred_capo": preferred_capo if isinstance(preferred_capo, int) else None,
+        "capo_policy": capo_policy,
+        "known_chords": payload.get("known_chords") or [],
+        "position_range": position_range,
+        "small_triad_strings": small_triad_strings,
+    }
+
+    result = arrange(arranger_payload)
+    plan = {
+        "request": str(payload.get("goal") or ""),
+        "source": "agent_explicit",
+        "template": "agent_explicit",
+        "key": key,
+        "style": style_card_style,
+        "section": section,
+        "bar_count": len(chords),
+        "color_level": "agent_decided",
+        "capo_policy": capo_policy,
+        "position_range": position_range,
+        "small_triad_strings": small_triad_strings,
+        "planned_chords": chords,
+        "arranger_chords": chords,
+    }
+    result["composition"] = {
+        "request": plan["request"],
+        "source": plan["source"],
+        "template": plan["template"],
+        "planned_chords": plan["planned_chords"],
+        "arranger_chords": plan["arranger_chords"],
+        "music_context": {
+            "key": key,
+            "style": style_card_style,
+            "section": section,
+            "bar_count": len(chords),
+            "color_level": "agent_decided",
+            "capo_policy": capo_policy,
+        },
+    }
+    result.setdefault("exports", {}).update(build_diverse_exports(result, plan))
+    return result
+
+
+def build_explicit_payload(args: argparse.Namespace) -> dict[str, Any] | None:
+    """Assemble an explicit-chord payload from CLI flags, or None if --chords absent."""
+    if not args.chords:
+        return None
+    payload: dict[str, Any] = {"chords": args.chords}
+    if args.key:
+        payload["key"] = args.key
+    if args.style:
+        payload["style"] = args.style
+    if args.section:
+        payload["section"] = args.section
+    if args.user_level:
+        payload["user_level"] = args.user_level
+    if args.capo is not None:
+        payload["preferred_capo"] = args.capo
+    if args.capo_policy:
+        payload["capo_policy"] = args.capo_policy
+    if args.position_range:
+        lo, hi = (int(x) for x in re.split(r"[-\s,]+", args.position_range.strip())[:2])
+        payload["position_range"] = [lo, hi]
+    if args.small_triad_strings:
+        payload["small_triad_strings"] = [int(x) for x in re.split(r"[-\s,]+", args.small_triad_strings.strip()) if x]
+    if args.known_chords:
+        payload["known_chords"] = parse_chord_list(args.known_chords)
+    if args.bpm is not None:
+        payload["bpm"] = args.bpm
+    if args.time_signature:
+        payload["time_signature"] = args.time_signature
+    if args.title:
+        payload["title"] = args.title
+    if args.goal:
+        payload["goal"] = args.goal
+    return payload
+
+
 def load_request_payload(args: argparse.Namespace) -> dict[str, Any]:
     if args.request:
         return {"request": args.request}
@@ -1452,7 +1886,7 @@ def load_request_payload(args: argparse.Namespace) -> dict[str, Any]:
     elif args.input_file:
         payload = load_json(Path(args.input_file))
     else:
-        raise ValueError("Provide a natural-language request, --input-json, or --input-file.")
+        raise ValueError("Provide --chords (explicit mode), a natural-language request, --input-json, or --input-file.")
     if isinstance(payload, str):
         return {"request": payload}
     if not isinstance(payload, dict):
@@ -1461,10 +1895,29 @@ def load_request_payload(args: argparse.Namespace) -> dict[str, Any]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Compose and arrange guitar harmony from a natural-language request.")
-    parser.add_argument("request", nargs="?", help="Natural-language guitar arrangement request.")
-    parser.add_argument("--input-json", help="Inline JSON input. Prefer a natural-language request field.")
+    parser = argparse.ArgumentParser(
+        description="Arrange guitar voicings. Preferred: agent supplies explicit chords via --chords."
+    )
+    parser.add_argument("request", nargs="?", help="(Legacy) Natural-language request; the agent should prefer --chords.")
+    parser.add_argument("--input-json", help="Inline JSON input.")
     parser.add_argument("--input-file", help="Path to JSON input file.")
+
+    explicit = parser.add_argument_group("explicit mode (preferred)")
+    explicit.add_argument("--chords", help='Concrete chords, e.g. "G Em C D" or "Cmaj7 Am7 Dm7 G7".')
+    explicit.add_argument("--key", help='Key, e.g. "G major" or "A minor".')
+    explicit.add_argument("--style", help="pop | rock | rnb | blues | funk.")
+    explicit.add_argument("--section", help="intro | verse | chorus | bridge | outro.")
+    explicit.add_argument("--user-level", dest="user_level", help="beginner | intermediate.")
+    explicit.add_argument("--capo", type=int, help="Fixed capo fret. Only set when the user wants a capo.")
+    explicit.add_argument("--capo-policy", dest="capo_policy", help="auto | no_capo | prefer_capo | fixed.")
+    explicit.add_argument("--position-range", dest="position_range", help='Fret window, e.g. "5-9".')
+    explicit.add_argument("--small-triad-strings", dest="small_triad_strings", help='String set, e.g. "3,4,5" (G,B,e) or "2,3,4" (D,G,B).')
+    explicit.add_argument("--known-chords", dest="known_chords", help="Shapes the user already knows.")
+    explicit.add_argument("--bpm", type=int, help="Tempo in BPM.")
+    explicit.add_argument("--time-signature", dest="time_signature", help='e.g. "4/4".')
+    explicit.add_argument("--title", help="Arrangement title.")
+    explicit.add_argument("--goal", help="Free-text note about the user's intent.")
+
     parser.add_argument("--diagram-png-output", help="Optional PNG path for rendered selected chord diagrams.")
     parser.add_argument("--diagram-columns", type=int, default=4, help="Number of columns in the optional diagram PNG.")
     parser.add_argument("--include-duplicate-diagrams", action="store_true", help="Render repeated chord/shape pairs in PNG.")
@@ -1472,12 +1925,16 @@ def main() -> None:
     parser.add_argument("--pretty", action="store_true", help="Pretty-print JSON.")
     args = parser.parse_args()
 
+    explicit_payload = build_explicit_payload(args)
     try:
-        payload = load_request_payload(args)
+        if explicit_payload is not None:
+            result = compose_explicit(explicit_payload)
+        else:
+            payload = load_request_payload(args)
+            result = compose(payload)
     except ValueError as exc:
         parser.error(str(exc))
 
-    result = compose(payload)
     if args.diagram_png_output:
         from render_chord_diagrams import render_chord_diagrams_png
 
